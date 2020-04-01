@@ -1,3 +1,49 @@
+#### added a small todo app on front page of boilerplate app to spot linting issues easier and such ####
+
+#### commands I used to arrive at a working version (im sure theres alot of redundancy) ####
+npx create-react-app my-app --template typescript
+npm install
+npm i -D eslint
+npx eslint --init
+        "To check syntax, find problems, and enforce code style"
+        "Javascript modules (import/export)"
+        "React"
+        "y"
+        "Browser"
+        "Use a popular style guide"
+        "Airbnb"
+        "Javascript"
+        "Y"
+npm i -D eslint-config-prettier eslint-plugin-prettier prettier
+npm i react-router-dom
+npm i @types/react-router-dom
+
+npm install eslint-config-airbnb-typescript \
+            eslint-plugin-import@^2.20.1 \
+            eslint-plugin-jsx-a11y@^6.2.3 \
+            eslint-plugin-react@^7.19.0 \
+            eslint-plugin-react-hooks@^2.5.0 \
+            @typescript-eslint/eslint-plugin@^2.24.0 \
+            --save-dev
+npm install
+npx eslint --ext .js,.jsx,.ts,.tsx ./
+npm install prettier -D
+npm install
+
+##### prettier auto format ######
+This is what my settings.json look like for eslint and prettier:
+
+ "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    { "language": "typescript", "autoFix": true },
+    { "language": "typescriptreact", "autoFix": true }
+  ]
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
