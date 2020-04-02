@@ -23,3 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 default.profraw
+src/API_KEY.tsx
