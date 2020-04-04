@@ -14,5 +14,5 @@ export const buildQueryString = (
     .map((k) => `${encodeURIComponent(k)}=${encodeURIComponent(params[k])}`)
     .join('&');
 
-  return `${API_URL}${endpoint}${queryParams ? `?${queryParams}` : ''} `;
+  return `${API_URL}${endpoint}${queryParams ? `?${queryParams}` : ''}`;
 };
