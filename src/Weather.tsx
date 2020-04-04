@@ -47,7 +47,7 @@ export const Weather: React.FC = () => {
   return (
     <div>
       <form onSubmit={handleSearch}>
-        <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} required />
+        <input type="text" className="text-gray-900" value={location} onChange={(e) => setLocation(e.target.value)} required />
         <button type="submit"> Search </button>
       </form>
 
@@ -75,36 +75,30 @@ export const Weather: React.FC = () => {
               {curWeather.city?.sunset}
             </div>
             <br />
-            <div style={{
-              display: 'flex', flexWrap: 'wrap',
-            }}
-            >
-              <div className="grid grid-cols-6 gap-4">
-                {curWeather.list.map((x: any) => (
-                  <div
-                    key={x.dt}
-                  >
-                    <div>
-                      Date:
-                      <br />
-                      {x.dt_txt}
-                    </div>
-
-                    <div>
-                      {`Temp: ${x.main.temp}`}
-                    </div>
-
-                    <div>
-                      {`Humidity: ${x.main.humidity}`}
-                    </div>
-
-                    <div>
-                      {`Wind: ${x.wind.speed}`}
-                    </div>
+            <div className="grid grid-cols-6 gap-4">
+              {curWeather.list.map((x: any) => (
+                <div
+                  key={x.dt}
+                >
+                  <div>
+                    Date:
+                    <br />
+                    {x.dt_txt}
                   </div>
-                ))}
 
-              </div>
+                  <div>
+                    {`Temp: ${x.main.temp}`}
+                  </div>
+
+                  <div>
+                    {`Humidity: ${x.main.humidity}`}
+                  </div>
+
+                  <div>
+                    {`Wind: ${x.wind.speed}`}
+                  </div>
+                </div>
+              ))}
             </div>
           </>
         )
