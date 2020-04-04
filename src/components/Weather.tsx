@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { API_KEY } from './API_KEY';
-import { GeoLocation, WeatherData } from './interfaces';
-import { Card } from './components/Card';
+import React, { useState, useEffect } from 'react';
+import { API_KEY } from '../API_KEY';
+import { GeoLocation, WeatherData } from '../interfaces';
+import { Card } from './Card';
+import { getForecast } from '../services/api';
 
 export const Weather: React.FC = () => {
   const [location, setLocation] = useState('');
   const [curWeather, setCurWeather] = useState<WeatherData>({});
 
   const fetchFormLocation = () => {
-    const URL = `https://api.openweathermap.org/data/2.5/forecast?q=${location}&appid=${API_KEY}`;
-    fetch(URL)
+    getForecast({ q: location })
       .then((res) => res.json())
       .then((result) => {
         setCurWeather(result);
@@ -25,9 +25,8 @@ export const Weather: React.FC = () => {
 
   const fetchGeoWeather = (position: any) => {
     const lat = position.coords.latitude;
-    const long = position.coords.longitude;
-    const URL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${API_KEY}`;
-    fetch(URL)
+    const lon = position.coords.longitude;
+    getForecast({ lat, lon })
       .then((res) => res.json())
       .then((result) => {
         setCurWeather(result);
