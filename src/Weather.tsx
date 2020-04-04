@@ -79,14 +79,10 @@ export const Weather: React.FC = () => {
               display: 'flex', flexWrap: 'wrap',
             }}
             >
-
-              {curWeather.list.map((x: any) => (
-                <Card>
+              <div className="grid grid-cols-6 gap-4">
+                {curWeather.list.map((x: any) => (
                   <div
                     key={x.dt}
-                    style={{
-                      minWidth: '180px', minHeight: '150px',
-                    }}
                   >
                     <div>
                       Date:
@@ -106,9 +102,9 @@ export const Weather: React.FC = () => {
                       {`Wind: ${x.wind.speed}`}
                     </div>
                   </div>
-                </Card>
-              ))}
+                ))}
 
+              </div>
             </div>
           </>
         )
