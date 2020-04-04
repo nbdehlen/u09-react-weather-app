@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { API_KEY } from './API_KEY';
 import { GeoLocation, WeatherData } from './interfaces';
+import { Card } from './components/Card';
 
 export const Weather: React.FC = () => {
   const [location, setLocation] = useState('');
@@ -13,6 +14,7 @@ export const Weather: React.FC = () => {
       .then((result) => {
         setCurWeather(result);
       });
+    // test comment
   };
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -79,30 +81,32 @@ export const Weather: React.FC = () => {
             >
 
               {curWeather.list.map((x: any) => (
-                <div
-                  key={x.dt}
-                  style={{
-                    minWidth: '180px', minHeight: '150px',
-                  }}
-                >
-                  <div>
-                    Date:
-                    <br />
-                    {x.dt_txt}
-                  </div>
+                <Card>
+                  <div
+                    key={x.dt}
+                    style={{
+                      minWidth: '180px', minHeight: '150px',
+                    }}
+                  >
+                    <div>
+                      Date:
+                      <br />
+                      {x.dt_txt}
+                    </div>
 
-                  <div>
-                    {`Temp: ${x.main.temp}`}
-                  </div>
+                    <div>
+                      {`Temp: ${x.main.temp}`}
+                    </div>
 
-                  <div>
-                    {`Humidity: ${x.main.humidity}`}
-                  </div>
+                    <div>
+                      {`Humidity: ${x.main.humidity}`}
+                    </div>
 
-                  <div>
-                    {`Wind: ${x.wind.speed}`}
+                    <div>
+                      {`Wind: ${x.wind.speed}`}
+                    </div>
                   </div>
-                </div>
+                </Card>
               ))}
 
             </div>
