@@ -4,6 +4,7 @@ interface Props {
   backgroundColor?: string;
   children?: ReactNode;
   color?: string;
+  divider?: boolean;
   dividerColor?: string;
   footer?: string;
   shadow?: boolean;
@@ -13,11 +14,20 @@ interface Props {
 }
 
 export const Card: React.FC<Props> = ({
-  backgroundColor, children, color, dividerColor, footer, shadow, titleColor, title, titleSmall,
+  backgroundColor,
+  children,
+  color,
+  divider,
+  dividerColor,
+  footer,
+  shadow,
+  titleColor,
+  title,
+  titleSmall,
 }: Props) => {
   const defaults: any = {
     backgroundColor: 'gray-900',
-    color: 'gray-400',
+    color: 'gray-600',
     dividerColor: 'gray-800',
     titleColor: 'gray-100',
   };
@@ -36,7 +46,7 @@ export const Card: React.FC<Props> = ({
       <div>
         {children}
       </div>
-      {footer ? <footer className={`mt-4 py-1 border-t border-${dividerColor || defaults.dividerColor}`}>{footer}</footer> : ''}
+      {footer ? <footer className={`mt-4${divider ? ' py-1 border-t' : ''}${divider ? ` border-${dividerColor || defaults.dividerColor}` : ''}`}>{footer}</footer> : ''}
     </div>
   );
 };
