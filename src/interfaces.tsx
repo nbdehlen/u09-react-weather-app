@@ -56,6 +56,6 @@ export interface WeatherData {
 }
 
 export interface GeoLocation {
-  long: string;
-  lat: string;
+  lon?: string;
+  lat?: string;
 }

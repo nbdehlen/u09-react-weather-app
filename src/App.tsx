@@ -8,35 +8,26 @@ export const App: React.FC = () => {
   const [location, setLocation] = useState('');
   const [curWeather, setCurWeather] = useState<WeatherData>({});
 
-  const fetchFormLocation = () => {
-    getForecast({ q: location })
+  const fetchWeather = (params: any) => {
+    getForecast(params)
       .then((res) => res.json())
       .then((result) => {
         setCurWeather(result);
       });
-    // test comment
   };
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    fetchFormLocation();
+    fetchWeather({ q: location });
     setLocation('');
   };
 
-  const fetchGeoWeather = (position: any) => {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude;
-    getForecast({ lat, lon })
-      .then((res) => res.json())
-      .then((result) => {
-        setCurWeather(result);
-      });
-  };
-
   const fetchGeolocation = () => {
-    const successCallback = (position: any) => {
-      console.log(position);
-      fetchGeoWeather(position);
+    const successCallback = (pos: any) => {
+      fetchWeather({
+        lat: pos.coords.latitude,
+        lon: pos.coords.longitude,
+      });
     };
     const errorCallback = (error: any) => {
       console.log(error);
