@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { GeoLocation, WeatherData } from './interfaces';
-import { getForecast } from './services/api';
-import { Weather } from './components/Weather';
+import { Weather, Forecast } from './interfaces';
+import { getForecast, getCurrentWeather } from './services/api';
+import { FiveDayForecast } from './components/FiveDayForecast';
 import './App.css';
+
 
 export const App: React.FC = () => {
   const [location, setLocation] = useState('');
-  const [curWeather, setCurWeather] = useState<WeatherData>({});
+  const [curForecast, setCurForecast] = useState<Forecast>({});
+  const [curWeather, setCurWeather] = useState<Weather>({});
 
   const fetchWeather = (params: any) => {
     getForecast(params)
+      .then((res) => res.json())
+      .then((result) => {
+        setCurForecast(result);
+      });
+
+    getCurrentWeather(params)
       .then((res) => res.json())
       .then((result) => {
         setCurWeather(result);
@@ -47,7 +55,7 @@ export const App: React.FC = () => {
         <button type="button" onClick={fetchGeolocation}> Get my location </button>
       </div>
 
-      <Weather data={curWeather} />
+      <FiveDayForecast data={curForecast} />
     </div>
   );
 };
