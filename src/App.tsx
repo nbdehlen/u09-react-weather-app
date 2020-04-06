@@ -1,11 +1,15 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import moment from 'moment';
+import { FaLocationArrow, FaSearch } from 'react-icons/fa';
 import { Weather, Forecast } from './interfaces';
 import { getForecast, getCurrentWeather } from './services/api';
 import { FiveDayForecast } from './components/FiveDayForecast';
 import { CurrentWeather } from './components/CurrentWeather';
 import { usePrevious } from './utilities';
 import './App.css';
+import { Searchbar } from './components/Searchbar';
+import { InputField } from './components/InputField';
+import { Navbar, NavbarItemType } from './components/Navbar';
 
 export const App: React.FC = () => {
   const [location, setLocation] = useState('');
@@ -81,56 +85,85 @@ export const App: React.FC = () => {
   }, [weatherParams, prevWeatherParams, units, prevUnits]);
 
   return (
-    <div className="m-8">
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          className="text-gray-900 mr-2"
-          value={location}
-          onChange={(e: ChangeEvent<HTMLInputElement>): void => setLocation(e.target.value)}
-          required
-        />
-        <button type="submit">Search</button>
-      </form>
+    <>
+      <Navbar
+        fluid
+        sticky
+        backgroundColor="black"
+        brand="Site name"
+        items={[
+          {
+            type: NavbarItemType.Button,
+            text: 'Favorites',
+            color: 'white',
+          },
+          {
+            type: NavbarItemType.Toggle,
+            text: 'Units:',
+            toggleText: `°${unit}`,
+            onClick: unitToggle,
+          },
+        ]}
+      />
+      <div className="max-w-screen-xl mx-auto">
+        <Searchbar>
+          <form className="w-full" onSubmit={handleSearch}>
+            <div className="flex flex-row flex-wrap justify-center">
+              <div className="w-3/4 mr-3">
+                <InputField
+                  type="text"
+                  placeholder="Search"
+                  className="text-gray-900"
+                  value={location}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void => setLocation(e.target.value)}
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="hover:text-white transition duration-100 ease-in"
+              >
+                <FaSearch />
+              </button>
+            </div>
+          </form>
+          <div className="mt-3">
+            <button
+              type="button"
+              className="flex flex-wrap items-center"
+              onClick={fetchGeolocation}
+            >
+              <FaLocationArrow className="mr-2" />
+              <span className="hover:text-white transition duration-100 ease-in">
+                Detect my location
+              </span>
+            </button>
+          </div>
+        </Searchbar>
 
-      <div>
-        <button type="button" onClick={fetchGeolocation}>
-          Get my location
-        </button>
-      </div>
-
-      <div>
-        <span className="mr-2">Units:</span>
-        <button type="button" onClick={unitToggle}>
-          &deg;
-          {unit}
-        </button>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2">
-        <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
-          {curWeather.name ? (
-            <h2 className="text-3xl">
-              {curWeather.name}
-              <small className="text-gray-500 ml-2">
-                {moment
-                  .unix(curWeather.dt || 0)
-                  .format(
-                    units === 'metric' ? 'HH:mm MMM Do' : 'h:mm MMM Do',
-                  )}
-              </small>
-            </h2>
-          ) : (
-            ''
-          )}
-        </div>
-        <div className="col-span-6 sm:col-span-1">
-          <CurrentWeather data={curWeather} unit={unit} />
-        </div>
-        <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
-          <FiveDayForecast data={curForecast} />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mx-4 my-12">
+          <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
+            {curWeather.name ? (
+              <h2 className="text-3xl">
+                {curWeather.name}
+                <small className="text-gray-500 ml-2">
+                  {moment
+                    .unix(curWeather.dt || 0)
+                    .format(units === 'metric' ? 'HH:mm MMM Do' : 'h:mm MMM Do')}
+                </small>
+              </h2>
+            ) : (
+              ''
+            )}
+          </div>
+          <div className="col-span-6 sm:col-span-1">
+            <CurrentWeather data={curWeather} unit={unit} />
+          </div>
+          <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
+            <FiveDayForecast data={curForecast} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
