@@ -7,6 +7,7 @@ interface Params {
   lat?: string;
   lon?: string;
   zip?: string;
+  units?: string;
 }
 
 export const getCurrentWeather = async (params?: Params): Promise<Response> => (

@@ -12,7 +12,6 @@ interface Props {
 
 export const CurrentWeather: React.FC<Props> = ({ data, unit }: Props) => {
   const weather = data.weather ? data.weather[0] : null;
-
   return (
     <>
       {weather ? (
@@ -56,9 +55,12 @@ export const CurrentWeather: React.FC<Props> = ({ data, unit }: Props) => {
               <div className="flex items-center">
                 <FaWind className="text-xl mr-2" />
                 <span className="text-white">
-                  {`${round(data.wind?.speed)} ${degreeDescription(
-                    data.wind?.deg,
-                  )} ${unit === 'C' ? 'm/s' : 'm/h'}`}
+                  {`${
+                    round(data.wind?.speed)
+                  } ${
+                    data.wind?.deg ? degreeDescription(data.wind?.deg) : ''} ${
+                    unit === 'C' ? 'm/s' : 'm/h'
+                  }`}
                 </span>
               </div>
             </div>
