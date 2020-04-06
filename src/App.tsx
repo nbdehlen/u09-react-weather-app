@@ -58,6 +58,7 @@ export const App: React.FC = () => {
         .then((res) => res.json())
         .then((result: Forecast) => {
           if (result.cod === '200') {
+            console.log(result);
             setCurForecast(result);
           } else {
             console.log('Error when fetching forecast');
@@ -96,12 +97,14 @@ export const App: React.FC = () => {
             type: NavbarItemType.Button,
             text: 'Favorites',
             color: 'white',
+            order: 0,
           },
           {
             type: NavbarItemType.Toggle,
             text: 'Units:',
             toggleText: `°${unit}`,
             onClick: unitToggle,
+            order: 1,
           },
         ]}
       />

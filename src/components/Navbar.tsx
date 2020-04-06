@@ -15,6 +15,7 @@ interface Item {
   onClick?: () => void;
   underlineColor?: string;
   underlineHoverColor?: string;
+  order: number;
 }
 
 interface Props {
@@ -69,49 +70,51 @@ export const Navbar: React.FC<Props> = ({
         {brand}
       </h1>
       <ul className="flex items-center">
-        {items.map((item: Item) => (
-          <li>
-            {item.type === NavbarItemType.Button ? (
-              <button
-                type="button"
-                className={`${item.className} text-md p-4 mr-4 ${
-                  item.color ? ` text-${item.color}` : ''
-                }${item.hoverColor ? ` hover:text-${item.hoverColor}` : ''}`}
-                onClick={item.onClick}
-              >
-                {item.text}
-              </button>
-            ) : (
-              ''
-            )}
-            {item.type === NavbarItemType.Toggle ? (
-              <>
-                <span className="mr-2">{item.text}</span>
+        {items
+          .sort((a, b) => a.order - b.order)
+          .map((item: Item) => (
+            <li key={item.order}>
+              {item.type === NavbarItemType.Button ? (
                 <button
                   type="button"
-                  className={`${
-                    item.className
-                  } text-lg text-white border-b-2 transition duration-100 ${
+                  className={`${item.className} text-md p-4 mr-4 ${
                     item.color ? ` text-${item.color}` : ''
-                  }${item.hoverColor ? ` hover:text-${item.hoverColor}` : ''}${
-                    item.underlineColor
-                      ? ` border-${item.underlineColor}`
-                      : ` border-${defaults.item.underlineColor}`
-                  }${
-                    item.underlineHoverColor
-                      ? ` hover:border-${item.underlineHoverColor}`
-                      : ` hover:border-${defaults.item.underlineHoverColor}`
-                  }`}
+                  }${item.hoverColor ? ` hover:text-${item.hoverColor}` : ''}`}
                   onClick={item.onClick}
                 >
-                  {item.toggleText}
+                  {item.text}
                 </button>
-              </>
-            ) : (
-              ''
-            )}
-          </li>
-        ))}
+              ) : (
+                ''
+              )}
+              {item.type === NavbarItemType.Toggle ? (
+                <>
+                  <span className="mr-2">{item.text}</span>
+                  <button
+                    type="button"
+                    className={`${
+                      item.className
+                    } text-lg text-white border-b-2 transition duration-100 ${
+                      item.color ? ` text-${item.color}` : ''
+                    }${item.hoverColor ? ` hover:text-${item.hoverColor}` : ''}${
+                      item.underlineColor
+                        ? ` border-${item.underlineColor}`
+                        : ` border-${defaults.item.underlineColor}`
+                    }${
+                      item.underlineHoverColor
+                        ? ` hover:border-${item.underlineHoverColor}`
+                        : ` hover:border-${defaults.item.underlineHoverColor}`
+                    }`}
+                    onClick={item.onClick}
+                  >
+                    {item.toggleText}
+                  </button>
+                </>
+              ) : (
+                ''
+              )}
+            </li>
+          ))}
       </ul>
     </div>
   );
