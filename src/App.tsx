@@ -1,4 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
+import moment from 'moment';
 import { Weather, Forecast } from './interfaces';
 import { getForecast, getCurrentWeather } from './services/api';
 import { FiveDayForecast } from './components/FiveDayForecast';
@@ -64,6 +65,7 @@ export const App: React.FC = () => {
         .then((result: Weather) => {
           if (result.cod === 200) {
             setCurWeather(result);
+            console.log(result);
           } else {
             console.log('Error when fetching current weather');
           }
@@ -106,6 +108,22 @@ export const App: React.FC = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2">
+        <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
+          {curWeather.name ? (
+            <h2 className="text-3xl">
+              {curWeather.name}
+              <small className="text-gray-500 ml-2">
+                {moment
+                  .unix(curWeather.dt || 0)
+                  .format(
+                    units === 'metric' ? 'HH:mm MMM Do' : 'h:mm MMM Do',
+                  )}
+              </small>
+            </h2>
+          ) : (
+            ''
+          )}
+        </div>
         <div className="col-span-6 sm:col-span-1">
           <CurrentWeather data={curWeather} unit={unit} />
         </div>
