@@ -34,7 +34,7 @@ export const Card: React.FC<Props> = ({
 
   return (
     <div
-      className={`rounded-lg py-5 px-4 bg-${backgroundColor || defaults.backgroundColor} text-${
+      className={`rounded-lg py-4 px-5 bg-${backgroundColor || defaults.backgroundColor} text-${
         color || defaults.color
       } ${shadow ? 'shadow-lg' : ''}`}
     >
