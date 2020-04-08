@@ -103,3 +103,8 @@ export interface GeoLocation {
   lon?: string;
   lat?: string;
 }
+
+export interface GraphData {
+  date?: string[];
+  temp?: number[];
+}
