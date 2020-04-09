@@ -3,7 +3,8 @@ import { Weather, Forecast } from './interfaces';
 import { getForecast, getCurrentWeather } from './services/api';
 import { FiveDayForecast } from './components/FiveDayForecast';
 import './App.css';
-
+import { AddFavorite } from './components/AddFavorite';
+import { FavoritesList } from './components/FavoritesList';
 
 export const App: React.FC = () => {
   const [location, setLocation] = useState('');
@@ -15,6 +16,7 @@ export const App: React.FC = () => {
       .then((res) => res.json())
       .then((result) => {
         setCurForecast(result);
+        console.log(result);
       });
 
     getCurrentWeather(params)
@@ -37,6 +39,7 @@ export const App: React.FC = () => {
         lon: pos.coords.longitude,
       });
     };
+
     const errorCallback = (error: any) => {
       console.log(error);
     };
@@ -47,15 +50,26 @@ export const App: React.FC = () => {
   return (
     <div>
       <form onSubmit={handleSearch}>
-        <input type="text" className="text-gray-900" value={location} onChange={(e) => setLocation(e.target.value)} required />
+        <input
+          type="text"
+          className="text-gray-900"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          required
+        />
         <button type="submit">Search</button>
       </form>
 
       <div>
-        <button type="button" onClick={fetchGeolocation}> Get my location </button>
+        <button type="button" onClick={fetchGeolocation}>
+          {' '}
+          Get my location{' '}
+        </button>
       </div>
 
       <FiveDayForecast data={curForecast} />
+      <AddFavorite location={curWeather.name} />
+      <FavoritesList data={curForecast} />
     </div>
   );
 };
