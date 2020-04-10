@@ -1,94 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Line, Bar } from 'react-chartjs-2';
+import moment from 'moment';
 import { Card } from './Card';
-import { GraphData } from '../interfaces';
+import { GraphData, Forecast } from '../interfaces';
 
-export const FiveDayForecast: React.FC<any> = ({ data }: any) => {
+
+interface Props {
+  data: Forecast;
+  unit: string;
+}
+
+export const FiveDayForecast: React.FC<any> = ({ data, unit }: Props) => {
   console.log('gorba');
-  const [dateModified, setDateModified] = useState();
 
-  // Creating Custom Tick Formats for Celcius and Fahrenheit
+  // sunrise sunset?
+  // use html tags deg; <sup> etc
+  // tooltip C/F
+  // style tooltip
+  // Additional data in tooltip?
+  // Additional graphs?
+  // label dates to different format?
+  // additional axis with icons?
+  // länka ihop color theme
+
+  // 
+  // loop over temp
+  // if [i] == 0: 
+  //  if ([i]temp.substring(0,10) == [i-1]temp.substring(0,10))
+  //    
+  //
+
 
   const dateLabels = (value: any, index: any) => {
     if (index === 0) {
-      return (`${value.substring(0, 10)}\r\n${value.substring(11, 16)}`);
+      return ('Today');
     } if (value.match('00:00:00')) {
-      return value.substring(0, 10);
+      return moment(value).format('dddd');
     }
-    // return value;
   };
-
-
-  // switch (value) {
-  //   case index === 0:
-  //     return value;
-  //   case value.match('00:00:00'):
-  //     return value.substring(0, 10);
-
-  //   default:
-  //     break;
-  // }
-  // };
-
-  /* const [dataPoints, setDataPoints] = useState<GraphData>({ date: [], temp: [] });
-
-  useEffect(() => {
-    if (data.list) {
-      setDataPoints(data.list.map((x: any) => (
-        {
-          date: x.dt_txt,
-          temp: x.main.temp,
-        }
-      )));
-    }
-  }, [data.list]);
-
-   useEffect(() => {
-    if (data.list) {
-      setDataPoints(data.list.map((x: any) => (
-        {
-          date: x.dt_txt,
-          temp: x.main.temp,
-        }
-      )));
-    }
-  }, [data.list]);
-
-  console.log(dataPoints); */
-
-  /*
-   useEffect(() => {
-    if (data.list) {
-      setdateModified(
-        data.list.filter(x => x.)
-      )
-    }
-  }, []) */
-  // useEffect(() => {
-  //   const getDate = () => {
-  //     const arr2 = [];
-  // let arr1 = [];
-  // arr2.push(data.list[0].dt_txt);
-
-  // for (let i = 0; i < data.list.length; i++) {
-  //   if (data.list[i].dt_txt.match('00:00:00')) {
-  //     arr2.push(data.list[i].dt_txt.substring(0, 10));
-  //   } else if (data.list[i].dt_txt.match('12:00:00')) {
-  //     arr2.push(data.list[i].dt_txt.substring(11, 16));
-  //   } else {
-  //     arr2.push('');
-  //   }
-  // }
-  // arr1 = arr2.concat();
-  //   setDateModified(arr2);
-  // };
-
-  //   if (data.list) {
-  //     getDate();
-  //   }
-  // }, [data.list]);
-
-  // console.log(dateModified);
 
   return (
     <div>
@@ -106,56 +55,57 @@ export const FiveDayForecast: React.FC<any> = ({ data }: any) => {
                 {`Sunset: ${data.city?.sunset}`}
               </div>
               <br />
-              <div className="grid grid-cols-6 gap-4">
-                {data.list.map((x: any) => (
-                  <div
-                    key={x.dt}
-                  >
-                    <div>
-                      Date:
-                      <br />
-                      {x.dt_txt}
-                    </div>
 
-                    <div>
-                      {`Temp: ${x.main.temp}`}
-                    </div>
-
-                    <div>
-                      {`Humidity: ${x.main.humidity}`}
-                    </div>
-
-                    <div>
-                      {`Wind: ${x.wind.speed}`}
-                    </div>
-                  </div>
-
-                ))}
-              </div>
             </Card>
 
             <div style={{ minHeight: '320px' }}>
-              <Line
+              <Bar
                 data={{
                   labels: data.list.map((x: any) => (x.dt_txt)),
                   datasets: [
                     {
+                      type: 'line',
                       label: 'Temperature',
-                      backgroundColor: 'rgba(255, 255, 99, 0.7)',
-                      borderColor: 'rgba(255,255,255,0.3)',
+                      backgroundColor: 'rgba(255, 255, 255, 0.3)', // 'rgba(255, 255, 99, 0.7)',
+                      borderColor: 'rgba(255,255,255,0.3)', // 'rgba(255,255,255,0.3)',
                       data: data.list.map((x: any) => (x.main.temp)),
                       lineTension: 0.2,
                       pointHoverRadius: 10,
-                      pointHoverBackgroundColor: 'rgba(255, 255, 99, 0.3)',
+                      pointHoverBackgroundColor: 'rgba(255,255,255,0.5)', // 'rgba(255, 255, 99, 0.3)',
+                      pointRadius: 4,
                       fill: false,
                       pointHitRadius: 10,
+                      pointBorderWidth: 0,
                       borderWidth: 3,
+                      showLine: true,
+                      // yAxisID: 'y-axis-1',
+                      // xAxisID: 'x-axis-1',
+                    }, {
+                      type: 'line',
+                      label: 'max',
+                      // backgroundColor: 'rgba(255, 255, 255, 0.3)', // 'rgba(255, 255, 99, 0.7)',
+                      borderColor: 'red', // 'rgba(255,255,255,0.3)',
+                      data: [16, 13, 14, 20, 11], // data.list.map((x: any) => (x.main.temp)),
+                      lineTension: 0.2,
+                      pointHoverRadius: 10,
+                      pointHoverBackgroundColor: 'rgba(255,255,255,0.5)', // 'rgba(255, 255, 99, 0.3)',
+                      pointRadius: 4,
+                      fill: false,
+                      pointHitRadius: 10,
+                      pointBorderWidth: 0,
+                      borderWidth: 3,
+                      showLine: true,
+                      // yAxisID: 'y-axis-2',
                     },
                   ],
                 }}
                 options={{
                   responsive: true,
                   maintainAspectRatio: false,
+                  /* tooltips: {
+                    mode: 'nearest',
+                    intersect: true,
+                  }, */
                   legend: {
                     display: false,
                   },
@@ -167,33 +117,53 @@ export const FiveDayForecast: React.FC<any> = ({ data }: any) => {
                   },
                   scales: {
                     yAxes: [{
+                      position: 'left',
+                      // id: 'y-axis-1',
                       gridLines: {
-                        lineWidth: 1,
-                        zeroLineColor: 'rgba(255,255,255,0.25)',
-                        color: 'rgba(255,255,255,0.25)',
+                        lineWidth: 2,
+                        zeroLineColor: 'rgba(255,255,255,0.6)',
+                        color: 'rgba(91,91,91,0.4)', // 'rgba(255,255,255,0.25)',
                         tickMarkLength: 0,
                       },
                       ticks: {
                         fontColor: 'rgba(255,255,255,0.4)',
-                        fontSize: 16,
-                        padding: 5,
-                        // Include a dollar sign in the ticks
+                        fontSize: 14,
+                        padding: 10,
                         callback(value: any) {
-                          return `${value} ℃/F`;
+                          return `${value} °${unit}`;
                         },
                       },
-                    }],
+                    },
+                    /* {
+                      position: 'right',
+                      id: 'y-axis-2',
+                      gridLines: {
+                        display: false,
+                      },
+                      ticks: {
+                        // stepSize: 4,
+                        min: 1,
+                        fontColor: 'rgba(255,255,255,0.4)',
+                        fontSize: 14,
+                        padding: 10,
+                        callback(value: any) {
+                          return `${value} °${unit}`;
+                        },
+                      },
+                    }, */
+                    ],
                     xAxes: [{
+                      // id: 'x-axis-1',
                       gridLines: {
                         lineWidth: 2,
-                        color: 'rgba(255,255,255,0.25)',
+                        color: 'rgba(91,91,91,0.6)', // 'rgba(255,255,255,0.25)',
                         tickMarkLength: 0,
                       },
                       display: true,
                       ticks: {
                         fontColor: 'rgba(255,255,255,0.4)',
                         padding: 14,
-                        fontSize: 16,
+                        fontSize: 14,
                         autoSkip: false,
                         callback(value: any, index: any) {
                           return dateLabels(value, index);
@@ -201,7 +171,9 @@ export const FiveDayForecast: React.FC<any> = ({ data }: any) => {
                         // min: 40,
                       },
 
-                    }],
+                    },
+                    // { display: false }
+                    ],
                   },
                 }}
               />

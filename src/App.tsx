@@ -128,7 +128,7 @@ export const App: React.FC = () => {
           <CurrentWeather data={curWeather} unit={unit} />
         </div>
         <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
-          <FiveDayForecast data={curForecast} />
+          <FiveDayForecast data={curForecast} unit={unit} />
         </div>
       </div>
     </div>
