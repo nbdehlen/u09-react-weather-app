@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import moment from 'moment';
 import { FaLocationArrow, FaSearch } from 'react-icons/fa';
-import { Weather, Forecast } from './interfaces';
+import { Weather, Forecast, WeatherParams } from './types/weather';
 import { getForecast, getCurrentWeather } from './services/api';
 import { FiveDayForecast } from './components/FiveDayForecast';
 import { CurrentWeather } from './components/CurrentWeather';
@@ -13,8 +13,8 @@ import { Navbar, NavbarItemType } from './components/Navbar';
 
 export const App: React.FC = () => {
   const [location, setLocation] = useState('');
-  const [weatherParams, setWeatherParams] = useState<any>({});
-  const [curForecast, setCurForecast] = useState<Forecast>({});
+  const [weatherParams, setWeatherParams] = useState<WeatherParams>({});
+  const [curForecast, setCurForecast] = useState<Forecast>({} as Forecast);
   const [curWeather, setCurWeather] = useState<Weather>({});
   const [units, setUnits] = useState('metric');
   const [unit, setUnit] = useState('C');
@@ -29,20 +29,18 @@ export const App: React.FC = () => {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    const params = { q: location };
-    setWeatherParams(params);
+    setWeatherParams({ q: location });
     setLocation('');
   };
 
   const fetchGeolocation = (): void => {
-    const successCallback = (pos: any): void => {
-      const params = {
+    const successCallback: PositionCallback = (pos: Position): void => {
+      setWeatherParams({
         lat: pos.coords.latitude,
         lon: pos.coords.longitude,
-      };
-      setWeatherParams(params);
+      });
     };
-    const errorCallback = (error: any): void => {
+    const errorCallback: PositionErrorCallback = (error: PositionError): void => {
       console.log(error);
     };
 
@@ -52,13 +50,12 @@ export const App: React.FC = () => {
 
   useEffect(() => {
     const fetchWeather = (): void => {
-      const params = { ...weatherParams, units };
+      const params: WeatherParams = { ...weatherParams, units };
 
       getForecast(params)
         .then((res) => res.json())
         .then((result: Forecast) => {
           if (result.cod === '200') {
-            console.log(result);
             setCurForecast(result);
           } else {
             console.log('Error when fetching forecast');
@@ -70,7 +67,6 @@ export const App: React.FC = () => {
         .then((result: Weather) => {
           if (result.cod === 200) {
             setCurWeather(result);
-            console.log(result);
           } else {
             console.log('Error when fetching current weather');
           }
@@ -152,7 +148,9 @@ export const App: React.FC = () => {
                 <small className="text-gray-500 ml-2">
                   {moment
                     .unix(curWeather.dt || 0)
-                    .format(units === 'metric' ? 'HH:mm MMM Do' : 'h:mm MMM Do')}
+                    .format(
+                      units === 'metric' ? 'HH:mm MMM Do' : 'h:mm a MMM Do',
+                    )}
                 </small>
               </h2>
             ) : (
@@ -162,8 +160,8 @@ export const App: React.FC = () => {
           <div className="col-span-6 sm:col-span-1">
             <CurrentWeather data={curWeather} unit={unit} />
           </div>
-          <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
-            <FiveDayForecast data={curForecast} />
+          <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-3">
+            <FiveDayForecast data={curForecast} unit={unit} />
           </div>
         </div>
       </div>
