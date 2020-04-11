@@ -2,7 +2,7 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import moment from 'moment';
 import { Weather, Forecast } from './interfaces';
 import { getForecast, getCurrentWeather } from './services/api';
-import { FiveDayForecast } from './components/FiveDayForecast';
+import { FiveDayForecastGraph } from './components/FiveDayForecastGraph';
 import { CurrentWeather } from './components/CurrentWeather';
 import { usePrevious } from './utilities';
 import './App.css';
@@ -128,7 +128,7 @@ export const App: React.FC = () => {
           <CurrentWeather data={curWeather} unit={unit} />
         </div>
         <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
-          <FiveDayForecast data={curForecast} unit={unit} />
+          <FiveDayForecastGraph data={curForecast} unit={unit} />
         </div>
       </div>
     </div>

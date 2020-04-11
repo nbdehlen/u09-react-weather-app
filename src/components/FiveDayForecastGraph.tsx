@@ -10,7 +10,7 @@ interface Props {
   unit: string;
 }
 
-export const FiveDayForecast: React.FC<any> = ({ data, unit }: Props) => {
+export const FiveDayForecastGraph: React.FC<any> = ({ data, unit }: Props) => {
   console.log('gorba');
 
   // sunrise sunset?
@@ -23,11 +23,11 @@ export const FiveDayForecast: React.FC<any> = ({ data, unit }: Props) => {
   // additional axis with icons?
   // länka ihop color theme
 
-  // 
+  //
   // loop over temp
-  // if [i] == 0: 
+  // if [i] == 0:
   //  if ([i]temp.substring(0,10) == [i-1]temp.substring(0,10))
-  //    
+  //
   //
 
 
