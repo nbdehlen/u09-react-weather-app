@@ -41,7 +41,7 @@ export const FiveDayForecast: React.FC<Props> = ({ data, city, unit }: Props) =>
           <div className="flex flex-row flex-wrap justify-between">
             <div>Forecast</div>
             <div className="flex flex-row flex-wrap items-center text-gray-400">
-              <WiSunrise className="w-5 h-5 mx-3 text-yellow-400" />
+              <WiSunrise className="w-5 h-5 mx-3 text-orange-400" />
               {moment.unix(city.sunrise).format(momentFormat)}
               <WiSunset className="w-5 h-5 mx-3 text-blue-400" />
               {moment.unix(city.sunset).format(momentFormat)}
