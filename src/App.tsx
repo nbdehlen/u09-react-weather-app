@@ -166,7 +166,7 @@ export const App: React.FC = () => {
               <h2 className="text-3xl">
                 {curWeather.name}
                 <sup className="ml-1 text-lg text-gray-500">{curWeather.sys?.country}</sup>
-                <small className="text-gray-500 ml-2">
+                <small className="text-gray-500 ml-3">
                   {moment
                     .unix(curWeather.dt || 0)
                     .format(
