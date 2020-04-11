@@ -5,6 +5,7 @@ import { getForecast, getCurrentWeather } from './services/api';
 import { FiveDayForecast } from './components/FiveDayForecast';
 import { CurrentWeather } from './components/CurrentWeather';
 import { usePrevious } from './utilities';
+import { Btn } from './components/Btn';
 import './App.css';
 
 export const App: React.FC = () => {
@@ -90,21 +91,31 @@ export const App: React.FC = () => {
           onChange={(e: ChangeEvent<HTMLInputElement>): void => setLocation(e.target.value)}
           required
         />
-        <button type="submit">Search</button>
+        <Btn type="submit">
+          Search
+        </Btn>
       </form>
 
       <div>
-        <button type="button" onClick={fetchGeolocation}>
+        <Btn type="button" onClick={fetchGeolocation}>
           Get my location
-        </button>
+        </Btn>
       </div>
+
+
+      {/* <div onClick={unitToggle}
+      onKeyDown={unitToggle}
+      role="button"
+        <span className="mr-2">Units:</span>
+        <Btn type="button" title={`${String.fromCharCode(0xB0) + unit}`} />
+  </div> */}
 
       <div>
         <span className="mr-2">Units:</span>
-        <button type="button" onClick={unitToggle}>
+        <Btn type="button" onClick={unitToggle}>
           &deg;
           {unit}
-        </button>
+        </Btn>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2">
