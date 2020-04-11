@@ -99,7 +99,7 @@ export const FiveDayForecast: React.FC<Props> = ({ data, unit }: Props) => {
                 <Toggle
                   content={(
                     <div className={`flex flex-row flex-wrap items-center ${defaults.color} ${defaults.backgroundColor} py-2 px-4 rounded text-sm sm:text-base`}>
-                      <div className="flex-1">
+                      <div className="w-24">
                         <p className="text-md text-white font-bold uppercase">
                           {moment(key, 'YYYY_M_D').format('dddd')}
                         </p>
@@ -168,7 +168,7 @@ export const FiveDayForecast: React.FC<Props> = ({ data, unit }: Props) => {
                       className={`flex flex-row flex-wrap items-center ${defaults.toggledColor} ${defaults.toggledBackgroundColor} py-2 px-4 rounded`}
                       style={defaults.toggledStyle}
                     >
-                      <div className="flex-1">
+                      <div className="w-24">
                         <p className="text-md text-white font-bold uppercase">
                           {moment(key, 'YYYY_M_D').format('dddd')}
                         </p>
