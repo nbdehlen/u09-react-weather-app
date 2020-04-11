@@ -1,7 +1,9 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import moment from 'moment';
 import { FaLocationArrow, FaSearch } from 'react-icons/fa';
-import { Weather, Forecast, WeatherParams } from './types/weather';
+import {
+  Weather, Forecast, WeatherParams, GroupedForecastList, ForecastList,
+} from './types/weather';
 import { getForecast, getCurrentWeather } from './services/api';
 import { FiveDayForecast } from './components/FiveDayForecast';
 import { CurrentWeather } from './components/CurrentWeather';
@@ -15,6 +17,7 @@ export const App: React.FC = () => {
   const [location, setLocation] = useState('');
   const [weatherParams, setWeatherParams] = useState<WeatherParams>({});
   const [curForecast, setCurForecast] = useState<Forecast>({} as Forecast);
+  const [curForecastGrouped, setCurForecastGrouped] = useState<GroupedForecastList>({});
   const [curWeather, setCurWeather] = useState<Weather>({});
   const [units, setUnits] = useState('metric');
   const [unit, setUnit] = useState('C');
@@ -56,7 +59,21 @@ export const App: React.FC = () => {
         .then((res) => res.json())
         .then((result: Forecast) => {
           if (result.cod === '200') {
+            // Group lists by date
+            const grouped = result.list!.reduce(
+              (newItems: GroupedForecastList, item: ForecastList) => {
+              // Convert unix time string to year_month_date
+                const t = moment.unix(item.dt).format('YYYY_M_D');
+                if (!newItems.list) newItems.list = {};
+                if (!newItems.list[t]) newItems.list[t] = [];
+                newItems.list[t].push(item);
+
+                return newItems;
+              }, {},
+            );
+
             setCurForecast(result);
+            setCurForecastGrouped(grouped);
           } else {
             console.log('Error when fetching forecast');
           }
@@ -161,7 +178,7 @@ export const App: React.FC = () => {
             <CurrentWeather data={curWeather} unit={unit} />
           </div>
           <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-3">
-            <FiveDayForecast data={curForecast} unit={unit} />
+            <FiveDayForecast data={curForecastGrouped} unit={unit} />
           </div>
         </div>
       </div>
