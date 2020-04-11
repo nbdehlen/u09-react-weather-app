@@ -44,6 +44,6 @@ module.exports = {
     'jsx-a11y/accessible-emoji': 0,
     'no-param-reassign': 0,
     'linebreak-style': 0,
-    "react/button-has-type": disabled,
+    'react/button-has-type': 0,
   },
 };

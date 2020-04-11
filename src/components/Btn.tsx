@@ -61,39 +61,3 @@ export const Btn: React.FC<Props> = ({
     </div>
   );
 };
-
-
-/*
-title -> &deg;
-type - wrap in another component that forces button type?
-onClick på parent div med role och onKey.... ?
-
-*/
-
-// .button {
-//   border-top: 1px solid #6f7478;
-//   background: #535759;
-//   background: -webkit-gradient(linear, left top, left bottom, from(#252729), to(#535759));
-//   background: -webkit-linear-gradient(top, #252729, #535759);
-//   background: -moz-linear-gradient(top, #252729, #535759);
-//   background: -ms-linear-gradient(top, #252729, #535759);
-//   background: -o-linear-gradient(top, #252729, #535759);
-
-//   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
-//   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
-//   box-shadow: rgba(0,0,0,1) 0 1px 0;
-//   text-shadow: rgba(0,0,0,.4) 0 1px 0;
-//   color: #e8e3e8;
-//   font-size: 19px;
-//   text-decoration: none;
-//   vertical-align: middle;
-//   }
-// .button:hover {
-//   border-top-color: #21475e;
-//   background: #21475e;
-//   color: #ffffff;
-//   }
-// .button:active {
-//   border-top-color: #1b435e;
-//   background: #1b435e;
-//   }
