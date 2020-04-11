@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 interface Props {
   children?: ReactNode;
   type?: 'submit' | 'button' | 'reset';
-  onClick?: any;
+  onClick?: (event: any) => void;
   backgroundColor?: string;
   outline?: string;
   color?: string;
@@ -53,7 +53,6 @@ export const Btn: React.FC<Props> = ({
         hover:bg-${hoverBackground || defaults.hoverBackground}
         text-${fontSize || defaults.fontSize}
         `}
-
         type={type || defaults.type}
         onClick={onClick}
       >
