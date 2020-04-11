@@ -113,8 +113,8 @@ export const FiveDayForecast: React.FC<Props> = ({ data, unit }: Props) => {
                           className="mx-auto"
                         />
                       </div>
-                      <div className="flex-1 flex flex-col flex-wrap items-center">
-                        <div className="w-12 whitespace-no-wrap text-right">
+                      <div className="flex-1 flex flex-col flex-wrap">
+                        <div className="w-16 whitespace-no-wrap text-right">
                           <p>
                             <span className="mr-1 text-gray-300 font-bold">
                               {round(highestTemp)}
@@ -200,8 +200,8 @@ export const FiveDayForecast: React.FC<Props> = ({ data, unit }: Props) => {
                             className="mx-auto"
                           />
                         </div>
-                        <div className="flex-1 flex flex-wrap justify-center">
-                          <p className="w-12 whitespace-no-wrap text-right">
+                        <div className="flex-1 flex flex-wrap">
+                          <p className="w-16 whitespace-no-wrap text-right">
                             <span className="text-gray-300 font-bold">
                               {round(item.main.temp)}
                             </span>
