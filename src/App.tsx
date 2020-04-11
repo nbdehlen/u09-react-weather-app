@@ -50,6 +50,9 @@ export const App: React.FC = () => {
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
   };
 
+  useEffect(() => {
+    fetchGeolocation();
+  }, []);
 
   useEffect(() => {
     const fetchWeather = (): void => {
