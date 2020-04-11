@@ -39,7 +39,7 @@ export const Card: React.FC<Props> = ({
       } ${shadow ? 'shadow-lg' : ''}`}
     >
       {title ? (
-        <header className="mb-2">
+        <header className="mb-4">
           <span className={`uppercase font-bold text-${titleSmall ? 'sm' : 'xl'} text-${titleColor || defaults.titleColor}`}>{title}</span>
         </header>
       ) : ''}
