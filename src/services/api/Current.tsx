@@ -4,8 +4,8 @@ const endpoint = '/weather';
 
 interface Params {
   q?: string;
-  lat?: string;
-  lon?: string;
+  lat?: number;
+  lon?: number;
   zip?: string;
   units?: string;
 }
