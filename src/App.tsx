@@ -102,14 +102,6 @@ export const App: React.FC = () => {
         </Btn>
       </div>
 
-
-      {/* <div onClick={unitToggle}
-      onKeyDown={unitToggle}
-      role="button"
-        <span className="mr-2">Units:</span>
-        <Btn type="button" title={`${String.fromCharCode(0xB0) + unit}`} />
-  </div> */}
-
       <div>
         <span className="mr-2">Units:</span>
         <Btn type="button" onClick={unitToggle}>
