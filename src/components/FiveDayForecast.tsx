@@ -115,7 +115,7 @@ export const FiveDayForecast: React.FC<Props> = ({ data, city, unit }: Props) =>
                       <div
                         className={`flex flex-row flex-wrap items-center ${defaults.color} ${defaults.backgroundColor} py-2 px-4 rounded text-sm sm:text-base`}
                       >
-                        <div className="w-24">
+                        <div className="w-24 flex-initial sm:flex-1 xl:flex-initial">
                           <p className="text-md text-white font-bold uppercase">
                             {moment(key, 'YYYY_M_D').format('dddd')}
                           </p>
@@ -150,7 +150,7 @@ export const FiveDayForecast: React.FC<Props> = ({ data, city, unit }: Props) =>
                           title="Average wind speed"
                         >
                           <FaWind className="mx-auto w-5 h-8" />
-                          <div className="flex items-center text-sm">
+                          <div className="flex items-center justify-center text-sm">
                             <span
                               className="text-gray-400"
                               title={degreeDescription(dayAvgWind.deg)}
@@ -191,7 +191,7 @@ export const FiveDayForecast: React.FC<Props> = ({ data, city, unit }: Props) =>
                         className={`flex flex-row flex-wrap items-center ${defaults.toggledColor} ${defaults.toggledBackgroundColor} py-2 px-4 rounded`}
                         style={defaults.toggledStyle}
                       >
-                        <div className="w-24">
+                        <div className="w-24 flex-initial sm:flex-1 xl:flex-initial">
                           <p className="text-md text-white font-bold uppercase">
                             {moment(key, 'YYYY_M_D').format('dddd')}
                           </p>
@@ -237,7 +237,7 @@ export const FiveDayForecast: React.FC<Props> = ({ data, city, unit }: Props) =>
                               <span className="text-gray-600">{` ${unitText}`}</span>
                             </p>
                           </div>
-                          <div className="flex-1 flex flex-row flex-wrap items-center sm:whitespace-no-wrap">
+                          <div className="flex-1 flex flex-row flex-wrap items-center justify-center sm:whitespace-no-wrap">
                             <span title={degreeDescription(item.wind.deg)}>
                               <WindDirectionIcon degree={item.wind.deg} />
                             </span>
