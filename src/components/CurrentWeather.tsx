@@ -43,24 +43,21 @@ export const CurrentWeather: React.FC<Props> = ({ data, unit }: Props) => {
             </div>
             <div className="flex flex-wrap justify-between w-full">
               <div className="flex items-center">
-                <WiHumidity className="text-3xl" />
+                <WiHumidity className="w-8 h-8" />
                 <span className="text-white">{`${data.main?.humidity}%`}</span>
               </div>
               <div className="flex items-center">
-                <WiBarometer className="text-3xl" />
+                <WiBarometer className="w-8 h-8" />
                 <span className="text-white">
                   {`${data.main?.pressure} hPa`}
                 </span>
               </div>
               <div className="flex items-center">
-                <FaWind className="text-xl mr-2" />
+                <FaWind className="w-8 h-5" />
                 <span className="text-white">
-                  {`${
-                    round(data.wind?.speed)
-                  } ${
-                    data.wind?.deg ? degreeDescription(data.wind?.deg) : ''} ${
-                    unit === 'C' ? 'm/s' : 'm/h'
-                  }`}
+                  {`${round(data.wind?.speed)} ${
+                    data.wind?.deg ? degreeDescription(data.wind?.deg) : ''
+                  } ${unit === 'C' ? 'm/s' : 'm/h'}`}
                 </span>
               </div>
             </div>
