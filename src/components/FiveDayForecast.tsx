@@ -10,6 +10,7 @@ import { Toggle } from './Toggle';
 import { WeatherIcon } from './WeatherIcon';
 import { round, degreeDescription } from '../utilities';
 import { ForecastList, GroupedForecastList } from '../types/weather';
+import { WindDirectionIcon } from './WindDirectionIcon';
 
 interface Props {
   data: GroupedForecastList;
@@ -129,7 +130,7 @@ export const FiveDayForecast: React.FC<Props> = ({ data, city, unit }: Props) =>
                           />
                         </div>
                         <div className="flex-1 flex flex-col flex-wrap">
-                          <div className="w-16 whitespace-no-wrap text-right">
+                          <div className="w-12 sm:w-16 whitespace-no-wrap text-right">
                             <p>
                               <span className="mr-1 text-gray-300 font-bold">
                                 {round(highestTemp)}
@@ -149,14 +150,21 @@ export const FiveDayForecast: React.FC<Props> = ({ data, city, unit }: Props) =>
                           title="Average wind speed"
                         >
                           <FaWind className="mx-auto w-5 h-8" />
-                          <span className="text-gray-400 sm:whitespace-no-wrap text-sm">
-                            {`${round(dayAvgWind.speed)} ${degreeDescription(
-                              dayAvgWind.deg,
-                            )} `}
-                          </span>
-                          <span className="text-gray-600">
-                            {unit === 'C' ? 'm/s' : 'm/h'}
-                          </span>
+                          <div className="flex items-center text-sm">
+                            <span
+                              className="text-gray-400"
+                              title={degreeDescription(dayAvgWind.deg)}
+                            >
+                              <WindDirectionIcon degree={dayAvgWind.deg} />
+                            </span>
+                            <span className="text-gray-400">
+                              {round(dayAvgWind.speed)}
+                            </span>
+                            <span className="text-gray-600">
+                              &nbsp;
+                              {unit === 'C' ? 'm/s' : 'm/h'}
+                            </span>
+                          </div>
                         </div>
                         <div
                           className="flex-1 text-center self-start"
@@ -222,22 +230,22 @@ export const FiveDayForecast: React.FC<Props> = ({ data, city, unit }: Props) =>
                             />
                           </div>
                           <div className="flex-1 flex flex-wrap">
-                            <p className="w-16 whitespace-no-wrap text-right">
+                            <p className="w-12 sm:w-16 whitespace-no-wrap text-right">
                               <span className="text-gray-300 font-bold">
                                 {round(item.main.temp)}
                               </span>
                               <span className="text-gray-600">{` ${unitText}`}</span>
                             </p>
                           </div>
-                          <div className="flex-1 sm:whitespace-no-wrap">
-                            <div>
-                              {`${round(item.wind.speed)} ${degreeDescription(
-                                item.wind.deg,
-                              )}`}
-                            </div>
-                            <div className="text-gray-600">
+                          <div className="flex-1 flex flex-row flex-wrap items-center sm:whitespace-no-wrap">
+                            <span title={degreeDescription(item.wind.deg)}>
+                              <WindDirectionIcon degree={item.wind.deg} />
+                            </span>
+                            <span>{round(item.wind.speed)}</span>
+                            <span className="text-gray-600">
+                              &nbsp;
                               {unit === 'C' ? 'm/s' : 'm/h'}
-                            </div>
+                            </span>
                           </div>
                           <div className="flex-1">
                             {`${item.main.humidity} `}

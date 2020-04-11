@@ -4,6 +4,7 @@ import { WiHumidity, WiBarometer } from 'react-icons/wi';
 import { Card } from './Card';
 import { round, degreeDescription } from '../utilities';
 import { Weather } from '../types/weather';
+import { WindDirectionIcon } from './WindDirectionIcon';
 
 interface Props {
   data: Weather;
@@ -49,12 +50,11 @@ export const CurrentWeather: React.FC<Props> = ({ data, unit }: Props) => {
               </div>
               <div className="flex items-center">
                 <FaWind className="w-8 h-5" />
-                <span className="text-white">
-                  {`${round(data.wind?.speed)} ${
-                    data.wind?.deg ? degreeDescription(data.wind?.deg) : ''
-                  }`}
+                <span className="text-white" title={degreeDescription(data.wind!.deg!)}>
+                  <WindDirectionIcon degree={data.wind!.deg!} />
                 </span>
-                <span className="text-gray-500">
+                <span className="text-white">{round(data.wind!.speed)}</span>
+                <span className="text-gray-600">
                   &nbsp;
                   {unit === 'C' ? 'm/s' : 'm/h'}
                 </span>
