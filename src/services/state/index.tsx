@@ -1,3 +1,3 @@
 import { createContext } from 'react';
 
-export const FavoritesContext = createContext({});
+export const FavoritesContext: any = createContext([]);

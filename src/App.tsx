@@ -7,14 +7,12 @@ import { FiveDayForecast } from './components/FiveDayForecast';
 import { CurrentWeather } from './components/CurrentWeather';
 import { usePrevious } from './utilities';
 import './App.css';
-<<<<<<< HEAD
 import { AddFavorite } from './components/AddFavorite';
 import { FavoritesList } from './components/FavoritesList';
-=======
 import { Searchbar } from './components/Searchbar';
 import { InputField } from './components/InputField';
 import { Navbar, NavbarItemType } from './components/Navbar';
->>>>>>> origin/master
+import { FavoritesContext } from './services/state';
 
 export const App: React.FC = () => {
   const [location, setLocation] = useState('');
@@ -25,26 +23,13 @@ export const App: React.FC = () => {
   const [unit, setUnit] = useState('C');
   const prevWeatherParams = usePrevious(weatherParams);
   const prevUnits = usePrevious(units);
+  const [favorites, setFavorites] = useState((): any =>
+    JSON.parse(localStorage.getItem('favorites') || '[]')
+  );
 
-<<<<<<< HEAD
-  const fetchWeather = (params: any) => {
-    getForecast(params)
-      .then((res) => res.json())
-      .then((result) => {
-        setCurForecast(result);
-        console.log(result);
-      });
-
-    getCurrentWeather(params)
-      .then((res) => res.json())
-      .then((result) => {
-        setCurWeather(result);
-      });
-=======
   const unitToggle = (): void => {
     setUnit(unit === 'C' ? 'F' : 'C');
     setUnits(units === 'metric' ? 'imperial' : 'metric');
->>>>>>> origin/master
   };
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -63,18 +48,12 @@ export const App: React.FC = () => {
       };
       setWeatherParams(params);
     };
-<<<<<<< HEAD
-
-    const errorCallback = (error: any) => {
-=======
     const errorCallback = (error: any): void => {
->>>>>>> origin/master
       console.log(error);
     };
 
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
   };
-
 
   useEffect(() => {
     const fetchWeather = (): void => {
@@ -104,121 +83,108 @@ export const App: React.FC = () => {
     };
 
     if (
-      Object.keys(weatherParams).length > 0
-      && (weatherParams !== prevWeatherParams || units !== prevUnits)
+      Object.keys(weatherParams).length > 0 &&
+      (weatherParams !== prevWeatherParams || units !== prevUnits)
     ) {
       fetchWeather();
     }
   }, [weatherParams, prevWeatherParams, units, prevUnits]);
 
   return (
-<<<<<<< HEAD
-    <div>
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          className="text-gray-900"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          required
-        />
-        <button type="submit">Search</button>
-      </form>
-
-      <div>
-        <button type="button" onClick={fetchGeolocation}>
-          {' '}
-          Get my location{' '}
-        </button>
-      </div>
-
-      <FiveDayForecast data={curForecast} />
-      <AddFavorite location={curWeather.name} />
-      <FavoritesList data={curForecast} />
-    </div>
-=======
     <>
-      <Navbar
-        fluid
-        sticky
-        backgroundColor="black"
-        brand="Site name"
-        items={[
-          {
-            type: NavbarItemType.Button,
-            text: 'Favorites',
-            color: 'white',
-            order: 0,
-          },
-          {
-            type: NavbarItemType.Toggle,
-            text: 'Units:',
-            toggleText: `°${unit}`,
-            onClick: unitToggle,
-            order: 1,
-          },
-        ]}
-      />
-      <div className="max-w-screen-xl mx-auto">
-        <Searchbar>
-          <form className="w-full" onSubmit={handleSearch}>
-            <div className="flex flex-row flex-wrap justify-center">
-              <div className="w-3/4 mr-3">
-                <InputField
-                  type="text"
-                  placeholder="Search"
-                  className="text-gray-900"
-                  value={location}
-                  onChange={(e: ChangeEvent<HTMLInputElement>): void => setLocation(e.target.value)}
-                  required
-                />
+      <FavoritesContext.Provider value={[favorites, setFavorites]}>
+        <Navbar
+          fluid
+          sticky
+          backgroundColor="black"
+          brand="Site name"
+          items={[
+            {
+              type: NavbarItemType.Button,
+              text: 'Favorites',
+              color: 'white',
+              order: 0,
+            },
+            {
+              type: NavbarItemType.Toggle,
+              text: 'Units:',
+              toggleText: `°${unit}`,
+              onClick: unitToggle,
+              order: 1,
+            },
+          ]}
+        />
+        <div className="max-w-screen-xl mx-auto">
+          <Searchbar>
+            <form className="w-full" onSubmit={handleSearch}>
+              <div className="flex flex-row flex-wrap justify-center">
+                <div className="w-3/4 mr-3">
+                  <InputField
+                    type="text"
+                    placeholder="Search"
+                    className="text-gray-900"
+                    value={location}
+                    onChange={(e: ChangeEvent<HTMLInputElement>): void =>
+                      setLocation(e.target.value)
+                    }
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="hover:text-white transition duration-100 ease-in"
+                >
+                  <FaSearch />
+                </button>
               </div>
+            </form>
+            <div className="mt-3">
               <button
-                type="submit"
-                className="hover:text-white transition duration-100 ease-in"
+                type="button"
+                className="flex flex-wrap items-center"
+                onClick={fetchGeolocation}
               >
-                <FaSearch />
+                <FaLocationArrow className="mr-2" />
+                <span className="hover:text-white transition duration-100 ease-in">
+                  Detect my location
+                </span>
               </button>
             </div>
-          </form>
-          <div className="mt-3">
-            <button
-              type="button"
-              className="flex flex-wrap items-center"
-              onClick={fetchGeolocation}
-            >
-              <FaLocationArrow className="mr-2" />
-              <span className="hover:text-white transition duration-100 ease-in">
-                Detect my location
-              </span>
-            </button>
-          </div>
-        </Searchbar>
+          </Searchbar>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mx-4 my-12">
-          <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
-            {curWeather.name ? (
-              <h2 className="text-3xl">
-                {curWeather.name}
-                <small className="text-gray-500 ml-2">
-                  {moment
-                    .unix(curWeather.dt || 0)
-                    .format(units === 'metric' ? 'HH:mm MMM Do' : 'h:mm MMM Do')}
-                </small>
-              </h2>
-            ) : (
-              ''
-            )}
-          </div>
-          <div className="col-span-6 sm:col-span-1">
-            <CurrentWeather data={curWeather} unit={unit} />
-          </div>
-          <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
-            <FiveDayForecast data={curForecast} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mx-4 my-12">
+            <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
+              {curWeather.name ? (
+                <h2 className="text-3xl">
+                  {curWeather.name}
+                  <small className="text-gray-500 ml-2">
+                    {moment
+                      .unix(curWeather.dt || 0)
+                      .format(
+                        units === 'metric' ? 'HH:mm MMM Do' : 'h:mm MMM Do'
+                      )}
+                    <AddFavorite location={curWeather.name} />
+                  </small>
+                </h2>
+              ) : (
+                ''
+              )}
+            </div>
+            <div className="col-span-6 sm:col-span-1">
+              <CurrentWeather data={curWeather} unit={unit} />
+            </div>
+            <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
+              <FiveDayForecast data={curForecast} />
+            </div>
+
+            <FavoritesList
+              onClick={(e: any): void => {
+                setWeatherParams({ q: e.target.value });
+              }}
+            />
           </div>
         </div>
-      </div>
+      </FavoritesContext.Provider>
     </>
->>>>>>> origin/master
   );
 };

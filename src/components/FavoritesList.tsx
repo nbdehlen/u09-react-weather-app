@@ -1,22 +1,18 @@
-import React, { ReactNode, useState } from 'react';
+import React, { useContext } from 'react';
+import { FavoritesContext } from '../services/state';
 
-export const FavoritesList: React.FC<any> = () => {
-  const [btnValue, setBtnValue] = useState('');
-  const storageFavorites: any = localStorage.getItem('favorites');
-  const favorites: any = storageFavorites ? JSON.parse(storageFavorites) : [];
-
-  const fetchFavLocation = () => {
-    console.log('test');
-  };
-
+interface Props {
+  onClick: (event?: any) => void;
+}
+export const FavoritesList: React.FC<Props> = ({ onClick }: Props) => {
+  const [favorites] = useContext(FavoritesContext);
   return (
     <div>
       <ul>
-        {favorites.map((item: string) => (
-          <li>
-            <button type="button" value={item} onClick={fetchFavLocation}>
-              {' '}
-              {item}{' '}
+        {favorites.map((location: string) => (
+          <li key={location}>
+            <button type="button" value={location} onClick={onClick}>
+              {location}
             </button>
           </li>
         ))}
