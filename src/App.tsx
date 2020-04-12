@@ -114,6 +114,13 @@ export const App: React.FC = () => {
             },
           ]}
         />
+        <div className="max-w-xs mx-auto mt-3">
+          <FavoritesList
+            onClick={(e: any): void => {
+              setWeatherParams({ q: e.target.value });
+            }}
+          />
+        </div>
         <div className="max-w-screen-xl mx-auto">
           <Searchbar>
             <form className="w-full" onSubmit={handleSearch}>
@@ -153,9 +160,9 @@ export const App: React.FC = () => {
           </Searchbar>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mx-4 my-12">
-            <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
+            <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6 grid-rows-4">
               {curWeather.name ? (
-                <h2 className="text-3xl">
+                <h2 className="text-3xl flex items-center">
                   {curWeather.name}
                   <small className="text-gray-500 ml-2">
                     {moment
@@ -163,25 +170,22 @@ export const App: React.FC = () => {
                       .format(
                         units === 'metric' ? 'HH:mm MMM Do' : 'h:mm MMM Do'
                       )}
-                    <AddFavorite location={curWeather.name} />
                   </small>
+                  <div className="ml-2">
+                    <AddFavorite location={curWeather.name} />
+                  </div>
                 </h2>
               ) : (
                 ''
               )}
             </div>
+
             <div className="col-span-6 sm:col-span-1">
               <CurrentWeather data={curWeather} unit={unit} />
             </div>
             <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
               <FiveDayForecast data={curForecast} />
             </div>
-
-            <FavoritesList
-              onClick={(e: any): void => {
-                setWeatherParams({ q: e.target.value });
-              }}
-            />
           </div>
         </div>
       </FavoritesContext.Provider>
