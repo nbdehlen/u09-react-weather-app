@@ -1,15 +1,8 @@
 import { buildQueryString } from './base';
+import { WeatherParams } from '../../types/weather';
 
 const endpoint = '/forecast';
 
-interface Params {
-  q?: string;
-  lat?: string;
-  lon?: string;
-  zip?: string;
-  units?: string;
-}
-
-export const getForecast = async (params?: Params): Promise<Response> => (
+export const getForecast = async (params?: WeatherParams): Promise<Response> => (
   fetch(buildQueryString(endpoint, params))
 );

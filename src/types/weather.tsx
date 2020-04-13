@@ -1,45 +1,49 @@
+
+export interface ForecastList {
+  dt: number;
+  main: {
+    temp: number;
+    feels_like: number;
+    temp_min: number;
+    temp_max: number;
+    pressure: number;
+    sea_level: number;
+    grnd_level: number;
+    humidity: number;
+    temp_kf: number;
+  };
+  weather: [
+    {
+      id: number;
+      main: string;
+      description: string;
+      icon: string;
+    }
+  ];
+  clouds: {
+    all: number;
+  };
+  wind: {
+    speed: number;
+    deg: number;
+  };
+  sys: {
+    pod: string;
+  };
+  dt_txt: string;
+}
+
+export interface GroupedForecastList {
+  list?: {
+    [key: string]: ForecastList[];
+  };
+}
+
 export interface Forecast {
   cod?: string;
   message?: number;
   cnt?: number;
-  list?: [
-    {
-      dt?: number;
-      main?: {
-        temp?: number;
-        feels_like?: number;
-        temp_min?: number;
-        temp_max?: number;
-        pressure?: number;
-        sea_level?: number;
-        grnd_level?: number;
-        humidity?: number;
-        temp_kf?: number;
-      };
-      weather?: [
-        {
-          id?: number;
-          main?: string;
-          description?: string;
-          icon?: string;
-        }
-      ];
-      clouds?: {
-        all?: number;
-      };
-      wind?: {
-        speed?: number;
-        deg?: number;
-      };
-      /* rain: {
-                3h: number;
-            }, */
-      /* sys: {
-        pod?: string;
-      }; */
-      dt_txt?: string;
-    }
-  ];
+  list?: ForecastList[];
   city?: {
     id?: number;
     name?: string;
@@ -99,9 +103,12 @@ export interface Weather {
   cod?: number;
 }
 
-export interface GeoLocation {
-  lon?: string;
-  lat?: string;
+export interface WeatherParams {
+  lat?: number;
+  lon?: number;
+  q?: string;
+  units?: string;
+  zip?: string;
 }
 
 export interface GraphData {
