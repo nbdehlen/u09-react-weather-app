@@ -1,40 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Line, Bar } from 'react-chartjs-2';
 import moment from 'moment';
 import { Card } from './Card';
-import { GraphData, Forecast } from '../interfaces';
+import {
+  Weather, ForecastList, Forecast, GroupedForecastList,
+} from '../types/weather';
 
 
 interface Props {
   data: Forecast;
   unit: string;
+  hilo: GroupedForecastList;
 }
 
-export const FiveDayForecastGraph: React.FC<any> = ({ data, unit }: Props) => {
+export const FiveDayForecastGraph: React.FC<any> = ({ data, unit, hilo }: Props) => {
   console.log('gorba');
+  const [hiTemp, setHiTemp] = useState({});
+  const [loTemp, setLoTemp] = useState({});
 
-  // sunrise sunset?
-  // use html tags deg; <sup> etc
-  // tooltip C/F
-  // style tooltip
-  // Additional data in tooltip?
-  // Additional graphs?
-  // label dates to different format?
-  // additional axis with icons?
-  // länka ihop color theme
+  useEffect(() => {
+    if (hilo.list) {
+      Object.entries(hilo.list).map(
+        ([key, day]: [string, ForecastList[]]): void => {
+          // Highest temperature of the day
+          const highTemp = Math.max.apply(
+            Math,
+            day.map((dayItem: ForecastList) => dayItem.main.temp),
+          );
+          // Lowest temperature of the day
+          const lowTemp = Math.min.apply(
+            Math,
+            day.map((dayItem: ForecastList) => dayItem.main.temp),
+          );
 
-  //
-  // loop over temp
-  // if [i] == 0:
-  //  if ([i]temp.substring(0,10) == [i-1]temp.substring(0,10))
-  //
-  //
+          // return (setHiTemp(highTemp));
+        },
+      );
+
+
+      console.log(hiTemp);
+    }
+  }, [hilo.list]);
+
+
+  // console.log(highTemp);
+
+  // use state for data.list.main.high and low mapped.
+  // if key matches hilo.list, replace/concat/add(whatever) the values to the high/low array
+
+  console.log(data.list);
 
 
   const dateLabels = (value: any, index: any) => {
-    if (index === 0) {
-      return ('Today');
-    } if (value.match('00:00:00')) {
+    // if (index === 0) {
+    //   return ('Today');
+    // }
+
+    if (value.match('00:00:00') || index === 0) {
       return moment(value).format('dddd');
     }
   };
@@ -46,14 +68,9 @@ export const FiveDayForecastGraph: React.FC<any> = ({ data, unit }: Props) => {
           <>
             <Card>
               <div>
-                {`City: ${data.city?.name}`}
+                yolo
               </div>
-              <div>
-                {`Sunrise: ${data.city?.sunrise}`}
-              </div>
-              <div>
-                {`Sunset: ${data.city?.sunset}`}
-              </div>
+
               <br />
 
             </Card>
@@ -85,7 +102,10 @@ export const FiveDayForecastGraph: React.FC<any> = ({ data, unit }: Props) => {
                       label: 'max',
                       // backgroundColor: 'rgba(255, 255, 255, 0.3)', // 'rgba(255, 255, 99, 0.7)',
                       borderColor: 'red', // 'rgba(255,255,255,0.3)',
-                      data: [16, 13, 14, 20, 11], // data.list.map((x: any) => (x.main.temp)),
+                      data: [1, 2, 3, 4, 5], // hilo.list.map((x: any) => (x.main.temp_max)), //
+                      // // {Object.entries(data.list).map(
+                      //   ([key, day]: [string, ForecastList[]]) => {
+                      // data.list.map((x: any) => (x.main.temp)), [1, 2, 3, 4, 5],
                       lineTension: 0.2,
                       pointHoverRadius: 10,
                       pointHoverBackgroundColor: 'rgba(255,255,255,0.5)', // 'rgba(255, 255, 99, 0.3)',

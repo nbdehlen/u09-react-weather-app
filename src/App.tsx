@@ -6,6 +6,7 @@ import {
 } from './types/weather';
 import { getForecast, getCurrentWeather } from './services/api';
 import { FiveDayForecastGraph } from './components/FiveDayForecastGraph';
+import { FiveDayForecast } from './components/FiveDayForecast';
 import { CurrentWeather } from './components/CurrentWeather';
 import { usePrevious } from './utilities';
 import './App.css';
@@ -188,6 +189,10 @@ export const App: React.FC = () => {
               unit={unit}
             />
           </div>
+
+        </div>
+        <div>
+          <FiveDayForecastGraph data={curForecast} unit={unit} hilo={curForecastGrouped} />
         </div>
       </div>
     </>
