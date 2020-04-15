@@ -10,21 +10,21 @@ interface Props {
   hilo: GroupedForecastList;
 }
 
-export const FiveDayForecastGraph: React.FC<any> = ({ data, unit, hilo }: Props) => {
+export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Props) => {
   const [hiTemp, setHiTemp] = useState([]);
   const [loTemp, setLoTemp] = useState([]);
 
   //
   // Date tooltips for graph is local, needs to be location dependant.
 
-
+  // remove key, replace entries v values?
   useEffect(() => {
     if (hilo.list) {
       const hiArr: any = [];
       const loArr: any = [];
-      Object.entries(hilo.list).map(
+      Object.entries(hilo.list).forEach(
         ([key, day]: [string, ForecastList[]]) => {
-          // Highest temperature of the day
+          // Highest temperature of the dayg
           // const highTemp = Math.max.apply(
           //   Math,
           //   day.map((dayItem: ForecastList) => dayItem.main.temp),
@@ -36,18 +36,17 @@ export const FiveDayForecastGraph: React.FC<any> = ({ data, unit, hilo }: Props)
           //   day.map((dayItem: ForecastList) => dayItem.main.temp),
           // );
 
-          // Add high and low daily values for each temperature data point
-          day.forEach((dataPont) => (hiArr.push(Math.max(
-            ...day.map((dayItem: ForecastList) => dayItem.main.temp),
-          )),
-          loArr.push(
-            Math.min(
+          // Loop over data points from each day
+          day.forEach((dataPont) => {
+            hiArr.push(Math.max(
               ...day.map((dayItem: ForecastList) => dayItem.main.temp),
-            ),
-          )),
-            // hiArr.push(maxDaily);
-            // loArr.push(minDaily);
-          );
+            ));
+            loArr.push(
+              Math.min(
+                ...day.map((dayItem: ForecastList) => dayItem.main.temp),
+              ),
+            );
+          });
         },
       );
       setHiTemp(hiArr);
@@ -161,7 +160,7 @@ export const FiveDayForecastGraph: React.FC<any> = ({ data, unit, hilo }: Props)
                           fontColor: 'rgba(255,255,255,0.4)',
                           fontSize: 14,
                           padding: 10,
-                          callback(value: any) {
+                          callback(value: string): string {
                             return `${value} °${unit}`;
                           },
                         },
@@ -180,7 +179,7 @@ export const FiveDayForecastGraph: React.FC<any> = ({ data, unit, hilo }: Props)
                           padding: 14,
                           fontSize: 14,
                           autoSkip: false,
-                          callback(value: any, index: any) {
+                          callback(value: string, index: number) {
                             return dateLabels(value, index);
                           },
                         },
