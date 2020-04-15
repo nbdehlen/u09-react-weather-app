@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
 import moment from 'moment';
-import { FaLocationArrow, FaSearch } from 'react-icons/fa';
+import { FaLocationArrow, FaSearch, FaTimes } from 'react-icons/fa';
 import {
   Weather, Forecast, WeatherParams, GroupedForecastList, ForecastList,
 } from './types/weather';
@@ -18,6 +18,7 @@ import { Navbar, NavbarItemType } from './components/Navbar';
 import { FavoritesContext } from './services/state';
 
 export const App: React.FC = () => {
+  const [error, setError] = useState('');
   const [location, setLocation] = useState('');
   const [weatherParams, setWeatherParams] = useState<WeatherParams>({});
   const [curForecast, setCurForecast] = useState<Forecast>({} as Forecast);
@@ -48,8 +49,8 @@ export const App: React.FC = () => {
         lon: pos.coords.longitude,
       });
     };
-    const errorCallback: PositionErrorCallback = (error: PositionError): void => {
-      console.log(error);
+    const errorCallback: PositionErrorCallback = (err: PositionError): void => {
+      setError(err.message);
     };
 
     navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
@@ -82,8 +83,9 @@ export const App: React.FC = () => {
 
             setCurForecast(result);
             setCurForecastGrouped(grouped);
+            setError('');
           } else {
-            console.log('Error when fetching forecast');
+            setError(result.message as string);
           }
         });
 
@@ -92,8 +94,9 @@ export const App: React.FC = () => {
         .then((result: Weather) => {
           if (result.cod === 200) {
             setCurWeather(result);
+            setError('');
           } else {
-            console.log('Error when fetching current weather');
+            setError(result.message as string);
           }
         });
     };
@@ -158,13 +161,28 @@ export const App: React.FC = () => {
             </Btn>
           </div>
         </Searchbar>
-
+        {error ? (
+          <div className="p-2 m-4 rounded bg-red-800 shadow-lg flex">
+            <span className="font-bold uppercase mr-3">Error</span>
+            <span className="text-gray-300">{error}</span>
+            <button
+              className="ml-auto opacity-75 hover:opacity-100"
+              onClick={(): void => setError('')}
+            >
+              <FaTimes />
+            </button>
+          </div>
+        ) : (
+          ''
+        )}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mx-4 my-12">
           <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
             {curWeather.name ? (
               <h2 className="text-3xl">
                 {curWeather.name}
-                <sup className="ml-1 text-lg text-gray-500">{curWeather.sys?.country}</sup>
+                <sup className="ml-1 text-lg text-gray-500">
+                  {curWeather.sys?.country}
+                </sup>
                 <small className="text-gray-500 ml-3">
                   {moment
                     .unix(curWeather.dt || 0)

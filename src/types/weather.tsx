@@ -41,7 +41,7 @@ export interface GroupedForecastList {
 
 export interface Forecast {
   cod?: string;
-  message?: number;
+  message?: number | string;
   cnt?: number;
   list?: ForecastList[];
   city?: {
@@ -100,7 +100,8 @@ export interface Weather {
   timezone?: number;
   id?: number;
   name?: string;
-  cod?: number;
+  cod?: number | string;
+  message?: string;
 }
 
 export interface WeatherParams {
