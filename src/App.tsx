@@ -8,6 +8,7 @@ import { getForecast, getCurrentWeather } from './services/api';
 import { FiveDayForecast } from './components/FiveDayForecast';
 import { CurrentWeather } from './components/CurrentWeather';
 import { usePrevious } from './utilities';
+import { Btn } from './components/Btn';
 import './App.css';
 import { AddFavorite } from './components/AddFavorite';
 import { FavoritesList } from './components/FavoritesList';
@@ -136,16 +137,16 @@ export const App: React.FC = () => {
                   required
                 />
               </div>
-              <button
+              <Btn
                 type="submit"
                 className="hover:text-white transition duration-100 ease-in"
               >
                 <FaSearch />
-              </button>
+              </Btn>
             </div>
           </form>
           <div className="mt-3">
-            <button
+            <Btn
               type="button"
               className="flex flex-wrap items-center"
               onClick={fetchGeolocation}
@@ -154,7 +155,7 @@ export const App: React.FC = () => {
               <span className="hover:text-white transition duration-100 ease-in">
                 Detect my location
               </span>
-            </button>
+            </Btn>
           </div>
         </Searchbar>
 
