@@ -110,8 +110,3 @@ export interface WeatherParams {
   units?: string;
   zip?: string;
 }
-
-export interface GraphData {
-  date?: string[];
-  temp?: number[];
-}

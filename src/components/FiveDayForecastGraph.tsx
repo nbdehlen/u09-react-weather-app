@@ -11,33 +11,22 @@ interface Props {
 }
 
 export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Props) => {
-  const [hiTemp, setHiTemp] = useState([]);
-  const [loTemp, setLoTemp] = useState([]);
+  const [hiTemp, setHiTemp] = useState<number[]>([]);
+  const [loTemp, setLoTemp] = useState<number[]>([]);
 
-  //
-  // Date tooltips for graph is local, needs to be location dependant.
-
-  // remove key, replace entries v values?
   useEffect(() => {
     if (hilo.list) {
-      const hiArr: any = [];
-      const loArr: any = [];
-      Object.entries(hilo.list).forEach(
-        ([key, day]: [string, ForecastList[]]) => {
-          // Highest temperature of the dayg
-          // const highTemp = Math.max.apply(
-          //   Math,
-          //   day.map((dayItem: ForecastList) => dayItem.main.temp),
-          // );
+      const hiArr: number[] = [];
+      const loArr: number[] = [];
+      console.log(hilo.list);
 
-          // Lowest temperature of the day
-          // const lowTemp = Math.min.apply(
-          //   Math,
-          //   day.map((dayItem: ForecastList) => dayItem.main.temp),
-          // );
-
-          // Loop over data points from each day
-          day.forEach((dataPont) => {
+      // loop over the days
+      Object.values(hilo.list).forEach(
+        (day: ForecastList[]) => {
+          // loop over data points in current iteration of day
+          day.forEach((dataPoint) => {
+            // get max and min temps and push them to respective array
+            // for every data point in current day
             hiArr.push(Math.max(
               ...day.map((dayItem: ForecastList) => dayItem.main.temp),
             ));
@@ -55,8 +44,9 @@ export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Prop
   }, [hilo.list]);
 
   // Replace date labels with days of the week
-  const dateLabels = (value: any, index: any) => {
-    if (value.match('02:00') || index === 0) {
+  const dateLabels = (value: string, index: number): string | undefined => {
+    const search = /02:00/;
+    if (search.exec(value) || index === 0) {
       return moment(value).format('dddd');
     }
   };
@@ -66,19 +56,18 @@ export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Prop
       {data.list && hiTemp
         ? (
           <>
-
             <Card>
               <div style={{ minHeight: '320px' }}>
                 <Bar
                   data={{
-                    labels: data.list.map((x: any) => (moment.unix(x.dt).format('YYYY-MM-DD HH:mm'))), // data.list.map((x: any) => (x.dt_txt)),
+                    labels: data.list.map((x: ForecastList) => (moment.unix(x.dt).format('YYYY-MM-DD HH:mm'))),
                     datasets: [
                       {
                         type: 'line',
                         label: 'Temperature',
                         backgroundColor: 'rgba(255, 255, 255, 0.3)',
                         borderColor: 'rgba(255,255,255,0.3)',
-                        data: data.list.map((x: any) => (x.main.temp)),
+                        data: data.list.map((x: ForecastList) => (x.main.temp)),
                         lineTension: 0.2,
                         pointHoverRadius: 10,
                         pointHoverBackgroundColor: 'rgba(217, 205, 69, 0.5)',
@@ -179,7 +168,7 @@ export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Prop
                           padding: 14,
                           fontSize: 14,
                           autoSkip: false,
-                          callback(value: string, index: number) {
+                          callback(value: string, index: number): string | undefined {
                             return dateLabels(value, index);
                           },
                         },
@@ -193,7 +182,6 @@ export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Prop
             </Card>
           </>
         )
-
         : ('')}
     </div>
   );
