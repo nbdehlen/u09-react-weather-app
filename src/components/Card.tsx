@@ -9,7 +9,7 @@ interface Props {
   footer?: string;
   shadow?: boolean;
   titleColor?: string;
-  title?: string;
+  title?: ReactNode;
   titleSmall?: boolean;
 }
 
@@ -39,8 +39,10 @@ export const Card: React.FC<Props> = ({
       } ${shadow ? 'shadow-lg' : ''}`}
     >
       {title ? (
-        <header className="mb-2">
-          <span className={`uppercase font-bold text-${titleSmall ? 'sm' : 'xl'} text-${titleColor || defaults.titleColor}`}>{title}</span>
+        <header className="mb-4">
+          <div className={`uppercase font-bold text-${titleSmall ? 'sm' : 'xl'} text-${titleColor || defaults.titleColor}`}>
+            {title}
+          </div>
         </header>
       ) : ''}
       <div>
