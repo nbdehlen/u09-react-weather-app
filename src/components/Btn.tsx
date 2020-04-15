@@ -44,9 +44,8 @@ export const Btn: React.FC<Props> = ({
   };
 
   return (
-    <div>
-      <button
-        className={`px-2 py-1 m-1 border-2 rounded
+    <button
+      className={`px-2 py-1 border-2 rounded
         bg-${backgroundColor || defaults.backgroundColor} 
         ${fontWeight ? '' : defaults.fontWeight} 
         text-${color || defaults.color}
@@ -55,12 +54,11 @@ export const Btn: React.FC<Props> = ({
         hover:bg-${hoverBackground || defaults.hoverBackground}
         text-${fontSize || defaults.fontSize} 
         ${className}
-        `}
-        type={type || defaults.type}
-        onClick={onClick}
-      >
-        {children}
-      </button>
-    </div>
+      `}
+      type={type || defaults.type}
+      onClick={onClick}
+    >
+      {children}
+    </button>
   );
 };
