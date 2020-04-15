@@ -1,4 +1,6 @@
-import React, { ReactNode, useState, useEffect, useContext } from 'react';
+import React, {
+  ReactNode, useState, useEffect, useContext,
+} from 'react';
 import { MdStar, MdStarBorder } from 'react-icons/md';
 import { FavoritesContext } from '../services/state';
 
@@ -30,10 +32,8 @@ export const AddFavorite: React.FC<Props> = ({ location }: Props) => {
     localStorage.setItem('favorites', JSON.stringify(newFavorites));
   };
   return (
-    <div>
-      <button type="button" onClick={toggleFavoriteBtn}>
-        {favorite ? <MdStar /> : <MdStarBorder />}
-      </button>
-    </div>
+    <button type="button" onClick={toggleFavoriteBtn}>
+      {favorite ? <MdStar /> : <MdStarBorder />}
+    </button>
   );
 };

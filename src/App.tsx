@@ -26,9 +26,7 @@ export const App: React.FC = () => {
   const [unit, setUnit] = useState('C');
   const prevWeatherParams = usePrevious(weatherParams);
   const prevUnits = usePrevious(units);
-  const [favorites, setFavorites] = useState((): any =>
-    JSON.parse(localStorage.getItem('favorites') || '[]')
-  );
+  const [favorites, setFavorites] = useState((): any => JSON.parse(localStorage.getItem('favorites') || '[]'));
 
   const unitToggle = (): void => {
     setUnit(unit === 'C' ? 'F' : 'C');
@@ -100,74 +98,71 @@ export const App: React.FC = () => {
     };
 
     if (
-      Object.keys(weatherParams).length > 0 &&
-      (weatherParams !== prevWeatherParams || units !== prevUnits)
+      Object.keys(weatherParams).length > 0
+      && (weatherParams !== prevWeatherParams || units !== prevUnits)
     ) {
       fetchWeather();
     }
   }, [weatherParams, prevWeatherParams, units, prevUnits]);
 
   return (
-    <>
-      <FavoritesContext.Provider value={[favorites, setFavorites]}>
-        <Navbar
-          fluid
-          sticky
-          backgroundColor="black"
-          brand="Site name"
-          items={[
-            {
-              type: NavbarItemType.Button,
-              text: 'Favorites',
-              color: 'white',
-              order: 0,
-            },
-            {
-              type: NavbarItemType.Toggle,
-              text: 'Units:',
-              toggleText: `°${unit}`,
-              onClick: unitToggle,
-              order: 1,
-            },
-          ]}
-        />
-        <div className="max-w-screen-xl mx-auto">
-          <Searchbar>
-            <form className="w-full" onSubmit={handleSearch}>
-              <div className="flex flex-row flex-wrap justify-center">
-                <div className="w-3/4 mr-3">
-                  <InputField
-                    type="text"
-                    placeholder="Search"
-                    className="text-gray-900"
-                    value={location}
-                    onChange={(e: ChangeEvent<HTMLInputElement>): void =>
-                      setLocation(e.target.value)
-                    }
-                    required
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="hover:text-white transition duration-100 ease-in"
-                >
-                  <FaSearch />
-                </button>
+    <FavoritesContext.Provider value={[favorites, setFavorites]}>
+      <Navbar
+        fluid
+        sticky
+        backgroundColor="black"
+        brand="Site name"
+        items={[
+          {
+            type: NavbarItemType.Button,
+            text: 'Favorites',
+            color: 'white',
+            order: 0,
+          },
+          {
+            type: NavbarItemType.Toggle,
+            text: 'Units:',
+            toggleText: `°${unit}`,
+            onClick: unitToggle,
+            order: 1,
+          },
+        ]}
+      />
+      <div className="max-w-screen-xl mx-auto">
+        <Searchbar>
+          <form className="w-full" onSubmit={handleSearch}>
+            <div className="flex flex-row flex-wrap justify-center">
+              <div className="w-3/4 mr-3">
+                <InputField
+                  type="text"
+                  placeholder="Search"
+                  className="text-gray-900"
+                  value={location}
+                  onChange={(e: ChangeEvent<HTMLInputElement>): void => setLocation(e.target.value)}
+                  required
+                />
               </div>
-            </form>
-            <div className="mt-3">
               <button
-                type="button"
-                className="flex flex-wrap items-center"
-                onClick={fetchGeolocation}
+                type="submit"
+                className="hover:text-white transition duration-100 ease-in"
               >
-                <FaLocationArrow className="mr-2" />
-                <span className="hover:text-white transition duration-100 ease-in">
-                  Detect my location
-                </span>
+                <FaSearch />
               </button>
             </div>
-          </Searchbar>
+          </form>
+          <div className="mt-3">
+            <button
+              type="button"
+              className="flex flex-wrap items-center"
+              onClick={fetchGeolocation}
+            >
+              <FaLocationArrow className="mr-2" />
+              <span className="hover:text-white transition duration-100 ease-in">
+                Detect my location
+              </span>
+            </button>
+          </div>
+        </Searchbar>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mx-4 my-12">
           <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
@@ -183,7 +178,7 @@ export const App: React.FC = () => {
                     )}
                 </small>
                 <span className="ml-2">
-                    <AddFavorite location={curWeather.name} />
+                  <AddFavorite location={curWeather.name} />
                 </span>
               </h2>
             ) : (
@@ -208,7 +203,7 @@ export const App: React.FC = () => {
             />
           </div>
         </div>
-      </FavoritesContext.Provider>
-    </>
+      </div>
+    </FavoritesContext.Provider>
   );
 };
