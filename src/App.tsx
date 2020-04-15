@@ -114,12 +114,6 @@ export const App: React.FC = () => {
         brand="Site name"
         items={[
           {
-            type: NavbarItemType.Button,
-            text: 'Favorites',
-            color: 'white',
-            order: 0,
-          },
-          {
             type: NavbarItemType.Toggle,
             text: 'Units:',
             toggleText: `°${unit}`,
