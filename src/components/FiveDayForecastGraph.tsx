@@ -18,7 +18,6 @@ export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Prop
     if (hilo.list) {
       const hiArr: number[] = [];
       const loArr: number[] = [];
-      console.log(hilo.list);
 
       // loop over the days
       Object.values(hilo.list).forEach(
@@ -80,7 +79,7 @@ export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Prop
                       }, {
                         type: 'line',
                         label: 'Max',
-                        borderColor: 'rgba(255, 138, 5, 0.6)', // 'rgba(174, 36, 36, 1)',
+                        borderColor: 'rgba(255, 138, 5, 0.6)',
                         data: hiTemp,
                         lineTension: 0.2,
                         pointHoverRadius: 10,
@@ -95,7 +94,7 @@ export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Prop
                       }, {
                         type: 'line',
                         label: 'Min',
-                        borderColor: 'rgba(49, 91, 155, 1)', // 'rgba(36, 86, 174, 1)',
+                        borderColor: 'rgba(49, 91, 155, 1)',
                         data: loTemp,
                         lineTension: 0.2,
                         pointHoverRadius: 10,
@@ -117,7 +116,7 @@ export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Prop
                       mode: 'index',
                       bodySpacing: 6,
                       multiKeyBackground: 'rgba(255,255,255,0.3)',
-                      backgroundColor: 'rgba(45, 55, 72, 1)', // 'rgba(74, 85, 104, 1)',
+                      backgroundColor: 'rgba(45, 55, 72, 1)',
 
                     },
                     legend: {
@@ -157,7 +156,7 @@ export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Prop
                       ],
                       xAxes: [{
                         gridLines: {
-                          // offsetGridLines: false,
+                          offsetGridLines: true,
                           lineWidth: 2,
                           color: 'rgba(91,91,91,0.6)',
                           tickMarkLength: 0,
