@@ -14,6 +14,7 @@ interface Props {
   borderColor?: string;
   hoverBackground?: string;
   fontSize?: string;
+  className?: string;
 }
 
 export const Btn: React.FC<Props> = ({
@@ -27,6 +28,7 @@ export const Btn: React.FC<Props> = ({
   borderColor,
   hoverBackground,
   fontSize,
+  className,
 
 
 }: Props) => {
@@ -51,7 +53,8 @@ export const Btn: React.FC<Props> = ({
         border-${borderStyle || defaults.borderStyle}
         border-${borderColor || defaults.borderColor}
         hover:bg-${hoverBackground || defaults.hoverBackground}
-        text-${fontSize || defaults.fontSize}
+        text-${fontSize || defaults.fontSize} 
+        ${className}
         `}
         type={type || defaults.type}
         onClick={onClick}
