@@ -9,9 +9,12 @@ import { FiveDayForecast } from './components/FiveDayForecast';
 import { CurrentWeather } from './components/CurrentWeather';
 import { usePrevious } from './utilities';
 import './App.css';
+import { AddFavorite } from './components/AddFavorite';
+import { FavoritesList } from './components/FavoritesList';
 import { Searchbar } from './components/Searchbar';
 import { InputField } from './components/InputField';
 import { Navbar, NavbarItemType } from './components/Navbar';
+import { FavoritesContext } from './services/state';
 
 export const App: React.FC = () => {
   const [location, setLocation] = useState('');
@@ -23,6 +26,7 @@ export const App: React.FC = () => {
   const [unit, setUnit] = useState('C');
   const prevWeatherParams = usePrevious(weatherParams);
   const prevUnits = usePrevious(units);
+  const [favorites, setFavorites] = useState((): any => JSON.parse(localStorage.getItem('favorites') || '[]'));
 
   const unitToggle = (): void => {
     setUnit(unit === 'C' ? 'F' : 'C');
@@ -102,19 +106,13 @@ export const App: React.FC = () => {
   }, [weatherParams, prevWeatherParams, units, prevUnits]);
 
   return (
-    <>
+    <FavoritesContext.Provider value={[favorites, setFavorites]}>
       <Navbar
         fluid
         sticky
         backgroundColor="black"
         brand="Site name"
         items={[
-          {
-            type: NavbarItemType.Button,
-            text: 'Favorites',
-            color: 'white',
-            order: 0,
-          },
           {
             type: NavbarItemType.Toggle,
             text: 'Units:',
@@ -173,6 +171,9 @@ export const App: React.FC = () => {
                       units === 'metric' ? 'HH:mm MMM Do' : 'h:mm a MMM Do',
                     )}
                 </small>
+                <span className="ml-2">
+                  <AddFavorite location={curWeather.name} />
+                </span>
               </h2>
             ) : (
               ''
@@ -188,8 +189,15 @@ export const App: React.FC = () => {
               unit={unit}
             />
           </div>
+          <div className="col-span-6 sm:col-span-2">
+            <FavoritesList
+              onClick={(e: any): void => {
+                setWeatherParams({ q: e.target.value });
+              }}
+            />
+          </div>
         </div>
       </div>
-    </>
+    </FavoritesContext.Provider>
   );
 };
