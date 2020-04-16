@@ -200,7 +200,7 @@ export const App: React.FC = () => {
             />
 
           </div>
-          <div className="col-span-6">
+          <div className="col-span-6 sm:col-span-2 lg:col-span-6 xl:col-span-6">
             <FiveDayForecastGraph data={curForecast} unit={unit} hilo={curForecastGrouped} />
           </div>
         </div>
