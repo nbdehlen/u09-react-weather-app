@@ -9,7 +9,7 @@ export const FavoritesList: React.FC<Props> = ({ onClick }: Props) => {
   const [favorites] = useContext(FavoritesContext);
   return (
     <>
-      <Card title="Favorite locations" titleSmall>
+      <Card title="Favorite locations" titleSmall fullHeight>
         <ul>
           {favorites.map((location: string) => (
             <li className="hover:text-white" key={location}>

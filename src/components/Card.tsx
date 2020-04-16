@@ -7,6 +7,7 @@ interface Props {
   divider?: boolean;
   dividerColor?: string;
   footer?: string;
+  fullHeight?: boolean;
   shadow?: boolean;
   titleColor?: string;
   title?: ReactNode;
@@ -20,6 +21,7 @@ export const Card: React.FC<Props> = ({
   divider,
   dividerColor,
   footer,
+  fullHeight,
   shadow,
   titleColor,
   title,
@@ -34,7 +36,7 @@ export const Card: React.FC<Props> = ({
 
   return (
     <div
-      className={`h-full rounded-lg py-4 px-5 bg-${backgroundColor || defaults.backgroundColor} text-${
+      className={`${fullHeight ? 'h-full' : ''} rounded-lg py-4 px-5 bg-${backgroundColor || defaults.backgroundColor} text-${
         color || defaults.color
       } ${shadow ? 'shadow-lg' : ''}`}
     >
