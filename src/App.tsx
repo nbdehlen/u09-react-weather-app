@@ -183,14 +183,14 @@ export const App: React.FC = () => {
               ''
             )}
           </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-4 sm:order-1 md:order-3">
+          <div className="col-span-12 sm:col-span-6 md:col-span-4 sm:order-2 md:order-3">
             <FavoritesList
               onClick={(e: any): void => {
                 setWeatherParams({ q: e.target.value });
               }}
             />
           </div>
-          <div className="col-span-12 sm:col-span-6 md:col-span-4 sm:order-2">
+          <div className="col-span-12 sm:col-span-6 md:col-span-4 sm:order-1 md:order-2">
             <CurrentWeather data={curWeather} unit={unit} />
           </div>
           <div className="col-span-12 md:col-span-6 md:col-span-8 sm:order-3 md:order-1 row-span-3">
