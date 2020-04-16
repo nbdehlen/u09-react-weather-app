@@ -198,9 +198,13 @@ export const App: React.FC = () => {
                 setWeatherParams({ q: e.target.value });
               }}
             />
+
           </div>
-          <FiveDayForecastGraph data={curForecast} unit={unit} hilo={curForecastGrouped} />
+          <div className="col-span-6">
+            <FiveDayForecastGraph data={curForecast} unit={unit} hilo={curForecastGrouped} />
+          </div>
         </div>
+
       </div>
     </FavoritesContext.Provider>
   );

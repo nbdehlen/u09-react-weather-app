@@ -56,7 +56,7 @@ export const FiveDayForecastGraph: React.FC<Props> = ({ data, unit, hilo }: Prop
         ? (
           <>
             <Card>
-              <div style={{ minHeight: '320px' }}>
+              <div style={{ minHeight: '360px' }}>
                 <Bar
                   data={{
                     labels: data.list.map((x: ForecastList) => (moment.unix(x.dt).format('YYYY-MM-DD HH:mm'))),
