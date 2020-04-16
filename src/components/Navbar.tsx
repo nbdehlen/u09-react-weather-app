@@ -63,6 +63,7 @@ export const Navbar: React.FC<Props> = ({
       className={`z-10 ${
         fluid ? '' : 'max-w-screen-xl mx-auto '
       }${sticky ? 'sticky top-0 ' : ''}px-4 flex flex-row flex-wrap items-center${cTextColor}${cBgColor}`}
+      style={{ height: '56px' }}
     >
       <h1
         className={`flex-grow text-xl font-bold tracking-wide uppercase${cBrandColor}`}

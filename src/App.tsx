@@ -9,10 +9,14 @@ import { FiveDayForecastGraph } from './components/FiveDayForecastGraph';
 import { FiveDayForecast } from './components/FiveDayForecast';
 import { CurrentWeather } from './components/CurrentWeather';
 import { usePrevious } from './utilities';
+import { Btn } from './components/Btn';
 import './App.css';
+import { AddFavorite } from './components/AddFavorite';
+import { FavoritesList } from './components/FavoritesList';
 import { Searchbar } from './components/Searchbar';
 import { InputField } from './components/InputField';
 import { Navbar, NavbarItemType } from './components/Navbar';
+import { FavoritesContext } from './services/state';
 
 export const App: React.FC = () => {
   const [location, setLocation] = useState('');
@@ -24,6 +28,7 @@ export const App: React.FC = () => {
   const [unit, setUnit] = useState('C');
   const prevWeatherParams = usePrevious(weatherParams);
   const prevUnits = usePrevious(units);
+  const [favorites, setFavorites] = useState((): any => JSON.parse(localStorage.getItem('favorites') || '[]'));
 
   const unitToggle = (): void => {
     setUnit(unit === 'C' ? 'F' : 'C');
@@ -103,19 +108,13 @@ export const App: React.FC = () => {
   }, [weatherParams, prevWeatherParams, units, prevUnits]);
 
   return (
-    <>
+    <FavoritesContext.Provider value={[favorites, setFavorites]}>
       <Navbar
         fluid
         sticky
         backgroundColor="black"
         brand="Site name"
         items={[
-          {
-            type: NavbarItemType.Button,
-            text: 'Favorites',
-            color: 'white',
-            order: 0,
-          },
           {
             type: NavbarItemType.Toggle,
             text: 'Units:',
@@ -139,16 +138,16 @@ export const App: React.FC = () => {
                   required
                 />
               </div>
-              <button
+              <Btn
                 type="submit"
                 className="hover:text-white transition duration-100 ease-in"
               >
                 <FaSearch />
-              </button>
+              </Btn>
             </div>
           </form>
           <div className="mt-3">
-            <button
+            <Btn
               type="button"
               className="flex flex-wrap items-center"
               onClick={fetchGeolocation}
@@ -157,7 +156,7 @@ export const App: React.FC = () => {
               <span className="hover:text-white transition duration-100 ease-in">
                 Detect my location
               </span>
-            </button>
+            </Btn>
           </div>
         </Searchbar>
 
@@ -174,6 +173,9 @@ export const App: React.FC = () => {
                       units === 'metric' ? 'HH:mm MMM Do' : 'h:mm a MMM Do',
                     )}
                 </small>
+                <span className="ml-2">
+                  <AddFavorite location={curWeather.name} />
+                </span>
               </h2>
             ) : (
               ''
@@ -190,11 +192,16 @@ export const App: React.FC = () => {
             />
           </div>
 
-        </div>
-        <div>
+          <div className="col-span-6 sm:col-span-2">
+            <FavoritesList
+              onClick={(e: any): void => {
+                setWeatherParams({ q: e.target.value });
+              }}
+            />
+          </div>
           <FiveDayForecastGraph data={curForecast} unit={unit} hilo={curForecastGrouped} />
         </div>
       </div>
-    </>
+    </FavoritesContext.Provider>
   );
 };
