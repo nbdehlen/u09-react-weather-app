@@ -113,7 +113,7 @@ export const App: React.FC = () => {
         fluid
         sticky
         backgroundColor="black"
-        brand="Site name"
+        brand="Weather forecast"
         items={[
           {
             type: NavbarItemType.Toggle,
