@@ -176,8 +176,8 @@ export const App: React.FC = () => {
         ) : (
           ''
         )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-2 mx-4 my-12">
-          <div className="col-span-6 sm:col-span-2 lg:col-span-3 xl:col-span-6">
+        <div className="grid grid-cols-12 grid-flow-row-dense gap-2 mx-4 my-12">
+          <div className="col-span-12">
             {curWeather.name ? (
               <h2 className="text-3xl">
                 {curWeather.name}
